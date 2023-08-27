@@ -1,0 +1,21 @@
+{
+    "name": "Congreagación Maroñas",
+    "short_name": "Congre Maroñas",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#272727",
+    "theme_color": "#1362c9",
+    "icons": [
+      {
+        "src": "icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
+  
