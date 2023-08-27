@@ -58,16 +58,17 @@ table {
 
 td {
   width: 10px;
-  height: 50px;
+ 
 }
 
 table tr:nth-child(odd) {
   background-color: #52B8D1;
-
+ height: 25px;
 }
 
 table tr:nth-child(even) {
   background-color: #5ACCB7;
+  height:25px;
 }
 
 
