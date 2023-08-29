@@ -79,7 +79,7 @@ function loadCsvData() {
       for (var i = 1; i < lines.length; i++) {
         var cells = lines[i].split(',');
         var row = table.insertRow();
-        
+
         var cellFecha = row.insertCell(0);
         cellFecha.textContent = cells[0];
         cellFecha.rowSpan = 3;
@@ -90,7 +90,7 @@ function loadCsvData() {
 
         var cell1 = row.insertCell();
         cell1.textContent = cells[2];
-        
+
         var row2 = table.insertRow();
         var cell2 = row2.insertCell();
         cell2.textContent = cells[3];

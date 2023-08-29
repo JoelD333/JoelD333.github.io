@@ -4,6 +4,7 @@ var hoja1 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej
 var hoja2 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pubhtml?gid=1998428620&single=true&widget=false&headers=false&chrome=false";
 var hoja3 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pubhtml?gid=1633400355&single=true&widget=false&headers=false&chrome=false";
 var hoja4 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pubhtml?gid=1147903656&single=true&widget=false&headers=false&chrome=false";
+
 const hojas = [hoja1, hoja2, hoja3, hoja4];
 const fechas = [];
 var hojaActual = 0;
@@ -58,14 +59,18 @@ function iframeManager() {
 };
 
 function hojaPlus() {
-    if (hojaActual < 3) {
-        hojaActual++
+    if (hojaActual >= 3) {
+        hojaActual=0;
+    }else{
+      hojaActual++;
     }
     iframeManager();
 };
 function hojaMinus() {
-    if (hojaActual > 0) {
-        hojaActual--
+    if (hojaActual >= 0) {
+        hojaActual=3;
+    }else{
+      hojaActual--;
     }
     iframeManager();
 };
