@@ -67,7 +67,7 @@ function hojaPlus() {
     iframeManager();
 };
 function hojaMinus() {
-    if (hojaActual >= 0) {
+    if (hojaActual <= 0) {
         hojaActual=3;
     }else{
       hojaActual--;
