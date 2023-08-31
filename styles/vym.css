@@ -60,11 +60,10 @@ a {
 }
 
 
-
-
 iframe {
 width: 99%;
 height: 95%;
+overflow: hidden;
 }
 
 
