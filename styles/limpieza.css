@@ -47,28 +47,40 @@ a {
 
 table {
   border-collapse: separate;
-  border: 1px solid #d1d1d1;
+  border-spacing: 0px;
   text-align: center;
   font-size: x-large;
   width: 97%;
   height: 92%;
   align-self: center;
-
 }
 
 td {
-  width: 10px;
- 
+  width: min-content;
 }
 
-table tr:nth-child(odd) {
-  background-color: #5ACCB7;
- height: 25px;
+
+th{
+  
+    background-color: #5ACCB7;
 }
 
-table tr:nth-child(even) {
+th:nth-child(odd){
+  border-top-left-radius: 10px;
+}
+th:nth-child(even){
+  border-top-right-radius: 10px;
+}
+
+
+table tbody:nth-child(even) {
+  background-color: #e6e6e6;
+
+}
+
+table tbody:nth-child(odd) {
+  
   background-color: #ffffff;
-  height:25px;
 }
 
 

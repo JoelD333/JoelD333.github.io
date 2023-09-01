@@ -66,6 +66,17 @@ function loadCsvData() {
             // Limpia cualquier dato existente en la tabla
             table.innerHTML = "";
 
+
+var header = table.insertRow();
+var headerCell = document.createElement("TH");
+            headerCell.innerHTML = "Tarea";
+            header.appendChild(headerCell);
+  var headerCell2 = document.createElement("TH");
+            headerCell2.innerHTML = "Encargado";
+            header.appendChild(headerCell2);
+           
+            
+
             // Procesa las líneas del archivo CSV
             var headers = lines[0].split(',');
             var cells = lines[columna].split(',');

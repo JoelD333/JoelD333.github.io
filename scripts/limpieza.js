@@ -67,18 +67,22 @@ function loadCsvData() {
 
 
       var cells = lines[0].split(',');
+      
       var row = table.insertRow();
       row.style.fontWeight = 'bold';
-      var header1 = row.insertCell(0);
-      header1.textContent = cells[0];
-
-      var header2 = row.insertCell(1);
-      header2.textContent = cells[1];
+      var header1 = document.createElement("TH");
+      header1.innerHTML = cells[0];
+row.appendChild(header1);
+      var header2 = document.createElement("TH");
+      header2.innerHTML = cells[1];
       header2.colSpan = 2;
+      row.appendChild(header2);
 
       for (var i = 1; i < lines.length; i++) {
         var cells = lines[i].split(',');
-        var row = table.insertRow();
+       var tb =  document.createElement("tbody");
+      
+        var row = tb.insertRow();
 
         var cellFecha = row.insertCell(0);
         cellFecha.textContent = cells[0];
@@ -91,11 +95,11 @@ function loadCsvData() {
         var cell1 = row.insertCell();
         cell1.textContent = cells[2];
 
-        var row2 = table.insertRow();
+        var row2 = tb.insertRow();
         var cell2 = row2.insertCell();
         cell2.textContent = cells[3];
 
-        var row3 = table.insertRow();
+        var row3 = tb.insertRow();
         var cell3 = row3.insertCell();
         cell3.textContent = cells[4];
 
@@ -105,6 +109,7 @@ function loadCsvData() {
           cell3.style.fontWeight = 'bold';
         }
 
+table.appendChild(tb);
       };
     })
     .catch(error => {
