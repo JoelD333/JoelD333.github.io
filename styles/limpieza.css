@@ -62,12 +62,12 @@ td {
 }
 
 table tr:nth-child(odd) {
-  background-color: #52B8D1;
+  background-color: #5ACCB7;
  height: 25px;
 }
 
 table tr:nth-child(even) {
-  background-color: #5ACCB7;
+  background-color: #ffffff;
   height:25px;
 }
 
@@ -82,6 +82,6 @@ body {
   margin: 0;
   background-color: #272727;
   font-family: Arial, Helvetica, sans-serif;
-  color: white;
+  color: rgb(0, 0, 0);
 
 }
