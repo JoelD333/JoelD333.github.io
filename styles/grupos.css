@@ -1,15 +1,11 @@
 .container {
-
-  justify-content: center;
-  text-align: center;
-  display: flex;
   align-items: center;
-  margin: 0 auto;
-  width: 95%;
-  font-size: 20px;
+  display: flex;
+  font-size: 18px;
   font-weight: bold;
   color: white;
-  align-self: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
 button {
@@ -25,12 +21,7 @@ button {
   transition: 0.3s;
   font-weight: bold;
   color: white;
-  align-self: end;
   margin: 2%;
-
-
-
-
 }
 
 button:hover {
@@ -47,32 +38,39 @@ a {
 
 
 table {
- 
+
   border-collapse: separate;
   border-spacing: 0px;
-  margin: 30px;
   text-align: center;
-  font-size: x-large;
-  width: 90%;
-  height: 50%;
+  font-size: normal;
+  width: auto;
   align-self: center;
- 
+
 }
 
 td {
-  width: 50%;
+  width: 136px;
 }
 
-
-th{
-  
-    background-color: #5ACCB7;
+td:nth-child(2) {
+  width: 10px;
 }
 
-th:nth-child(odd){
+tr {
+  height: 45px;
+}
+
+th {
+  width: min-content;
+  text-align: center;
+  background-color: #5ACCB7;
+}
+
+th:first-child {
   border-top-left-radius: 10px;
 }
-th:nth-child(even){
+
+th:last-child {
   border-top-right-radius: 10px;
 }
 
@@ -83,7 +81,6 @@ table tr:nth-child(even) {
 }
 
 table tr:nth-child(odd) {
-  
   background-color: #ffffff;
 }
 
@@ -100,6 +97,6 @@ body {
   background-color: #272727;
   position: absolute;
   font-family: Arial, Helvetica, sans-serif;
-  color: rgb(0,0,0);
+  color: rgb(0, 0, 0);
   align-self: flex-start;
 }
