@@ -47,15 +47,13 @@ a {
 
 
 table {
- 
   border-collapse: separate;
   border-spacing: 0px;
-  margin: 30px;
   text-align: center;
   font-size: x-large;
-  width: 90%;
-  height: 50%;
+  width: 98%;
   align-self: center;
+  height: 80%;
  
 }
 
