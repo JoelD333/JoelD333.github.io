@@ -60,10 +60,12 @@ function dateManager() {
 }
 
 function iframeManager() {
+  
+ var loader = document.getElementById("loader");
+ loader.style.display = 'initial';
   iframe = document.getElementById("iframe");
-
   iframe.src = hojas[hojaActual];
-
+loader.style.display = 'none';
 };
 
 function hojaPlus() {

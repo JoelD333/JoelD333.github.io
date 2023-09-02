@@ -6,7 +6,7 @@ var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVD
 
 var dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
 
-const urls = [hoja1Url, hoja2Url,hoja3Url,hoja4Url]
+const urls = [hoja1Url, hoja2Url, hoja3Url, hoja4Url]
 var semana = 0;
 
 
@@ -33,7 +33,7 @@ function dateManager() {
       var rows = data.split('\n');
       //Cargar fechas en el Array
       const fechas = [];
-    
+
       for (var i = 1; i < rows.length; i++) {
         var cells = rows[i].split(',');
         fechas.push(cells[0]);
@@ -59,14 +59,20 @@ function dateManager() {
 
 // Función para cargar los datos desde Google Sheets
 function loadCsvData() {
+  var table = document.getElementById("csvTable");
+  table.innerHTML = "";
+  
+ var loader = document.getElementById("loader");
+ loader.style.display = 'initial';
+ 
   fetch(urls[semana])
     .then(response => response.text())
     .then(data => {
-      var table = document.getElementById("csvTable");
+
       var lines = data.split('\n');
 
       // Limpia cualquier dato existente en la tabla
-      table.innerHTML = "";
+
 
       // Procesa las líneas del archivo CSV
 
@@ -84,10 +90,10 @@ function loadCsvData() {
 
       headers.forEach(head => {
         var header = document.createElement("TH")
-      header.innerHTML = head;
-      headersRow.appendChild(header);
+        header.innerHTML = head;
+        headersRow.appendChild(header);
       });
-      
+
 
 
       for (var i = 2; i < lines.length; i++) {
@@ -109,6 +115,8 @@ function loadCsvData() {
 
 
       }
+     
+      loader.style.display = 'none';
     })
     .catch(error => {
       console.error("Error al cargar el archivo CSV:", error);
@@ -143,6 +151,3 @@ function semanaMinus() {
   }
   loadCsvData();
 };
-
-
-

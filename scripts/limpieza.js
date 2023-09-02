@@ -56,16 +56,21 @@ function loadDates() {
 
 // Función para cargar los datos desde Google Sheets
 function loadCsvData() {
+  
+  // Buscar Tabla y limpiarla
+  var table = document.getElementById("csvTable");
+  table.innerHTML = "";
+  
+  //Buscar Loader y mostrarlo
+ var loader = document.getElementById("loader");
+ loader.style.display = 'initial';
+ 
   fetch(csvUrl)
     .then(response => response.text())
     .then(data => {
-      var table = document.getElementById("csvTable");
+      
+      // Separar el CSV
       var lines = data.split('\n');
-
-      // Limpia cualquier dato existente en la tabla
-      table.innerHTML = "";
-
-
       var cells = lines[0].split(',');
       
       var row = table.insertRow();
@@ -111,6 +116,8 @@ row.appendChild(header1);
 
 table.appendChild(tb);
       };
+      //Esconder loader
+      loader.style.display ='none';
     })
     .catch(error => {
       console.error("Error al cargar el archivo CSV:", error);
