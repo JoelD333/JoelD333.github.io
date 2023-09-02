@@ -18,16 +18,16 @@ button {
   background-color: #52B8D1;
   border: none;
   font-size: 16px;
-  margin: 1.5%;
   cursor: pointer;
-  border-radius: 8px;
-  height: 2pc;
-  width: 2pc;
+  border-radius: 4px;
+  height: 2.5pc;
+  width: 2.5pc;
   box-shadow: 0 4px 8px 0 rgba(5, 5, 5, 0.2);
   transition: 0.3s;
   font-weight: bold;
   color: white;
-
+  align-self: end;
+  margin: 2%;
 
 
 }
