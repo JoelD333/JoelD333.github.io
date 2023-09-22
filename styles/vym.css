@@ -65,18 +65,24 @@ iframe {
 width: 99%;
 height: 95%;
 overflow: hidden;
+
 }
 
 
 body {
   width: 97%;
   height: 98vh;
-  overflow: hidden;
+  
   background-color: #272727;
   color: white;
   align-items: center;
   align-content: center;
 
+}
+
+.mainContainer{
+  overflow: hidden;
+  height: 85%;
 }
 
 .loader {
