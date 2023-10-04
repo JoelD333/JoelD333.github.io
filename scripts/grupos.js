@@ -1,8 +1,8 @@
 // URL de la API de Google Sheets
-var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=0&single=true&output=csv";
-var hoja2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=30113003&single=true&output=csv";
-var hoja3Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=950445821&single=true&output=csv";
-var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=2036176846&single=true&output=csv";
+var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=0&single=true&output=csv";
+var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=30113003&single=true&output=csv";
+var hoja2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=950445821&single=true&output=csv";
+var hoja3Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=2036176846&single=true&output=csv";
 
 var dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
 
@@ -34,21 +34,24 @@ function dateManager() {
       //Cargar fechas en el Array
       const fechas = [];
 
-      for (var i = 1; i < rows.length; i++) {
+      for (var i = 1; i < 5; i++) {
         var cells = rows[i].split(',');
         fechas.push(cells[0]);
       }
 
+      console.log(fechas);
+      
       //Buscar la fecha mas cercana a la actual
       var date = new Date().getDate();
       ci = closestIndex(date, fechas);
-      hojaActual = ci;
 
       if (date < fechas[ci] && ci != 0) {
         semana = ci - 1;
       } else {
         semana = ci;
       };
+      
+     
 
       loadCsvData();
     }).catch(error => {

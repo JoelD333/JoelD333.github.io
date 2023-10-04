@@ -20,7 +20,7 @@ const closestIndex = (num, arr) => {
   return index;
 };
 
-//Carga fecha actual, elije la columna más cercana al día 
+//Carga fecha actual, elije la fila más cercana al día 
 function loadDates() {
   fetch(csvUrl)
     .then(response => response.text())
@@ -46,9 +46,11 @@ function loadDates() {
         fila = ci;
       }
 
+loadCsvData();
 
     }).catch(error => {
       console.error("Error al cargar el archivo CSV:", error);
+     
     });
 
 }
@@ -73,19 +75,25 @@ function loadCsvData() {
       var lines = data.split('\n');
       var cells = lines[0].split(',');
       
+      //Agregar Encabezados
       var row = table.insertRow();
       row.style.fontWeight = 'bold';
+      
       var header1 = document.createElement("TH");
+      header1.colSpan = 2;
       header1.innerHTML = cells[0];
-row.appendChild(header1);
+      row.appendChild(header1);
+      
       var header2 = document.createElement("TH");
       header2.innerHTML = cells[1];
-      header2.colSpan = 2;
+      header2.colSpan = 1;
       row.appendChild(header2);
 
       for (var i = 1; i < lines.length; i++) {
         var cells = lines[i].split(',');
+      
        var tb =  document.createElement("tbody");
+      
       
         var row = tb.insertRow();
 
@@ -109,13 +117,12 @@ row.appendChild(header1);
         cell3.textContent = cells[4];
 
         if (i == fila) {
-          row.style.fontWeight = 'bold';
-          cell2.style.fontWeight = 'bold';
-          cell3.style.fontWeight = 'bold';
+          tb.style.fontWeight = 'bold';
         }
 
 table.appendChild(tb);
       };
+      
       //Esconder loader
       loader.style.display ='none';
     })
@@ -127,4 +134,3 @@ table.appendChild(tb);
 
 // Carga los datos al cargar la página
 window.addEventListener("load", loadDates);
-window.addEventListener("load", loadCsvData);
