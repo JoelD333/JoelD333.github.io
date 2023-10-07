@@ -1,14 +1,17 @@
 // URL de la API de Google Sheets
-var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=0&single=true&output=csv";
-var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=30113003&single=true&output=csv";
-var hoja2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=950445821&single=true&output=csv";
-var hoja3Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=2036176846&single=true&output=csv";
+
+var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=284054636&single=true&widget=false&headers=false&chrome=false";
+var hoja2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=2036176846&single=true&widget=false&headers=false&chrome=false";
+var hoja3Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=321154631&single=true&widget=false&headers=false&chrome=false";
+var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=0&single=true&widget=false&headers=false&chrome=false";
+var hoja5Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=1184309177&single=true&widget=false&headers=false&chrome=false";
 
 var dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
 
-const urls = [hoja1Url, hoja2Url, hoja3Url, hoja4Url]
-var semana = 0;
+const hojas = [hoja1Url, hoja2Url, hoja3Url, hoja4Url, hoja5Url]
+const fechas = [];
 
+var hojaActual = 0;
 
 //Número más cercano, retorna índice del array
 const closestIndex = (num, arr) => {
@@ -46,111 +49,51 @@ function dateManager() {
       ci = closestIndex(date, fechas);
 
       if (date < fechas[ci] && ci != 0) {
-        semana = ci - 1;
+        hojaActual = ci - 1;
       } else {
-        semana = ci;
+        hojaActual = ci;
       };
       
      
 
-      loadCsvData();
+      iframeManager();
     }).catch(error => {
       console.error("Error al cargar el archivo CSV:", error);
     });
 
 }
 
-// Función para cargar los datos desde Google Sheets
-function loadCsvData() {
-  var table = document.getElementById("csvTable");
-  table.innerHTML = "";
+function iframeManager() {
   
- var loader = document.getElementById("loader");
- loader.style.display = 'initial';
+  var loader = document.getElementById("loader");
+  loader.style.display = 'initial';
+  
+   iframe = document.getElementById("iframe");
+   iframe.src = hojas[hojaActual];
+   iframe.scrolling = 'no';
  
-  fetch(urls[semana])
-    .then(response => response.text())
-    .then(data => {
-
-      var lines = data.split('\n');
-
-      // Limpia cualquier dato existente en la tabla
-
-
-      // Procesa las líneas del archivo CSV
-
-      var cells0 = lines[0].split(',');
-
-
-      //Cambiar fecha
-      var fecha = document.getElementById("date");
-      fecha.textContent = cells0[1];
-
-
-      var headersRow = table.insertRow();
-      headersRow.style.fontWeight = 'bold';
-      var headers = lines[1].split(',')
-
-      headers.forEach(head => {
-        var header = document.createElement("TH")
-        header.innerHTML = head;
-        headersRow.appendChild(header);
-      });
-
-
-
-      for (var i = 2; i < lines.length; i++) {
-        var dataCells = lines[i].split(',')
-        var newRow = table.insertRow();
-
-
-        var cell1 = newRow.insertCell();
-        cell1.textContent = dataCells[0];
-
-        var cell2 = newRow.insertCell();
-        cell2.textContent = dataCells[1];
-
-        var cell3 = newRow.insertCell();
-        cell3.textContent = dataCells[2];
-
-        var cell4 = newRow.insertCell();
-        cell4.textContent = dataCells[3];
-
-
-      }
-     
-      loader.style.display = 'none';
-    })
-    .catch(error => {
-      console.error("Error al cargar el archivo CSV:", error);
-    });
-}
+ loader.style.display = 'none';
+ 
+ };
 
 // Carga los datos al cargar la página
 window.addEventListener("load", dateManager);
 
 
-
-// Botones
-
-var buttonPlus = document.getElementById("buttonPlus");
-var buttonMinus = document.getElementById("buttonMinus");
-
-
-function semanaPlus() {
-  if (semana >= 3) {
-    semana = 0;
+function hojaPlus() {
+  if (hojaActual >= 4) {
+    hojaActual = 0;
   } else {
-    semana++;
+    hojaActual++;
   }
-  loadCsvData();
+  iframeManager();
 };
 
-function semanaMinus() {
-  if (semana <= 0) {
-    semana = 3;
+function hojaMinus() {
+  if (hojaActual <= 0) {
+    hojaActual = 4;
   } else {
-    semana--;
+    hojaActual--;
   }
-  loadCsvData();
+  iframeManager();
 };
