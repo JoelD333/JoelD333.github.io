@@ -5,6 +5,9 @@ var hoja2 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej
 var hoja3 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pubhtml?gid=1633400355&single=true&widget=false&headers=false&chrome=false";
 var hoja4 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pubhtml?gid=1147903656&single=true&widget=false&headers=false&chrome=false";
 
+
+var loader;
+
 const hojas = [hoja1, hoja2, hoja3, hoja4];
 const fechas = [];
 var hojaActual = 0;
@@ -25,6 +28,9 @@ const closestIndex = (num, arr) => {
 };
 
 function dateManager() {
+
+  loader = document.getElementById("loader");
+
   fetch(dataUrl)
     .then(response => response.text())
     .then(data => {
@@ -39,15 +45,13 @@ function dateManager() {
       var date = new Date().getDate();
       ci = closestIndex(date, fechas);
       hojaActual = ci;
+      console.log(rows);
+      console.log(fechas);
+      console.log(date);
+      console.log(ci);
 
-      if (date > fechas[ci]) {
-
-        if (ci = fechas.length) {
-          hojaActual = 0;
-        } else {
-          hojaActual = ci + 1;
-        }
-
+      if (date > fechas[ci]) {        
+          hojaActual = ci + 1;        
       } else {
         hojaActual = ci;
       };
@@ -59,10 +63,7 @@ function dateManager() {
 
 }
 
-function iframeManager() {
-  
- var loader = document.getElementById("loader");
- loader.style.display = 'initial';
+function iframeManager() {  
  
   iframe = document.getElementById("iframe");
   iframe.src = hojas[hojaActual];
@@ -73,6 +74,7 @@ loader.style.display = 'none';
 };
 
 function hojaPlus() {
+  loader.style.display = 'initial';
   if (hojaActual >= 3) {
     hojaActual = 0;
   } else {
@@ -82,6 +84,7 @@ function hojaPlus() {
 };
 
 function hojaMinus() {
+  loader.style.display = 'initial';
   if (hojaActual <= 0) {
     hojaActual = 3;
   } else {
