@@ -69,7 +69,7 @@ function iframeManager() {
   loader.style.display = 'initial';
   
    iframe = document.getElementById("iframe");
-   iframe.src = hojas[hojaActual];
+   iframe.src = hojas[0];
    iframe.scrolling = 'no';
  
  loader.style.display = 'none';
