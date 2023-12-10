@@ -7,14 +7,13 @@ function savePDF() {
 
     document.querySelectorAll("select").forEach(e => {
 
-      //  element.classList.add = "hide"
-      const selectedOption = e.options[e.selectedIndex]
-        const selectText = selectedOption.text;
 
-        selectedOption.text = selectText.slice(0,-10)
-         
-        
-        //element.textContent = element.textContent.slice(0,-10)        
+        //  element.classList.add = "hide"
+        const selectedOption = e.options[e.selectedIndex]
+        const selectText = selectedOption.text;
+        e.classList.add("hide-border")
+
+        selectedOption.text = selectText.slice(0, -10)
     });
 
 
@@ -303,7 +302,7 @@ function loadDB() {
     vidaSelectors.forEach(select => {
 
         select.innerHTML = "<option>    </option>";
-       
+
         data.filter(e => Number(e[4]) > 1).forEach(e => {
 
             const option = document.createElement("option")

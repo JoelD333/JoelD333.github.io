@@ -21,9 +21,8 @@ ul {
 
 }
 
-select{
-    border-style: none;
-    width: fit-content;
+.hide-border{
+    border-style: none;    
 }
 
 /* Titulos */
