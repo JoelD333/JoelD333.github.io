@@ -34,7 +34,7 @@ function savePDF() {
 
     window.html2pdf().set(opt).from(element).toImg().save();
 
-   location.reload();
+    changeWeek();
 }
 
 
