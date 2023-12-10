@@ -41,7 +41,7 @@ function savePDF() {
 //Cargar datos de la semana
 function loadWeek(week) {
 
-    const url = "/Files/Weeks/" + week + ".html"
+    const url = "vym/Files/Weeks/" + week + ".html"
     fetch(url)
         .then((response) => {
             if (!response.ok) {
