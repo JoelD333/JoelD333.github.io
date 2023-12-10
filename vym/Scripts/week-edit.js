@@ -31,8 +31,10 @@ function savePDF() {
         html2canvas: { scale: 1 },
         jsPDF: { unit: 'in', format: 'a3', orientation: 'portrait' }
     };
-    html2pdf().set(opt).from(element).toImg().save();
 
+    window.html2pdf().set(opt).from(element).toImg().save();
+
+   location.reload();
 }
 
 
