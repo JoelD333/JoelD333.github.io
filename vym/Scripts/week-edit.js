@@ -1,6 +1,77 @@
 var weekDoc = "";
 
 
+// Guarada la fecha de la semana en el DataArray y lo guarda
+function saveDates() {
+
+  const csv = sessionStorage.getItem("db")
+
+  var data = parseToArray(csv, true)
+  console.log(data)
+
+
+
+  const week = document.querySelector("#weekSelector")
+  const selects = document.querySelectorAll("select")
+
+  const ids = []
+
+  selects.forEach(select => {
+
+    const selecetedOption = select.options[select.selectedIndex]
+    if (selecetedOption.value != "") {
+      ids.push(select.options[select.selectedIndex].id)
+    }
+
+
+  });
+
+
+  ids.forEach(id => {
+    data.filter(row => row[0] == id)[0][5] = getDateOfWeek(week.value)
+  })
+
+  createAndSaveCSV(data);
+
+}
+
+
+function getDateOfWeek(week) {
+
+  const w = week.slice(-2)
+  const y = week.slice(0, 4)
+
+
+  var d = (1 + (w - 1) * 7) + 2;
+
+  const date = new Date(y, 0, d)
+
+  const newDate = date.toISOString().slice(2,10);
+  return newDate;
+}
+
+
+//Transform Data Array to CSV
+function createAndSaveCSV(csvArray, fileName, rowDelimiter = '\r\n') {
+
+  const csvString = csvArray.join(rowDelimiter);
+  download_txt(csvString);
+
+}
+
+//Guardar texto Como CSV
+function download_txt(textToSave) {
+  var hiddenElement = document.createElement('a');
+
+  hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);
+  hiddenElement.target = '_blank';
+  hiddenElement.download = 'db.csv';
+  hiddenElement.click();
+
+}
+
+
+
 function savePDF() {
 
   //Remove dates
@@ -13,11 +84,8 @@ function savePDF() {
     const selectText = selectedOption.text;
     e.classList.add("hide-border")
 
-    selectedOption.text = selectText.slice(1, -10)
+    selectedOption.text = selectText.slice(2, -10)
   });
-
-
-
 
 
   // Choose the element that your content will be rendered to.
@@ -33,8 +101,6 @@ function savePDF() {
   };
 
   window.html2pdf().set(opt).from(element).toImg().save();
-
-  changeWeek();
 }
 
 
@@ -94,11 +160,13 @@ function loadWeek(week) {
 
 
           selector1.id = maestrosCount + "-0"
+          selector1.required = 'required'
           selector1.classList.add("staging")
 
 
 
           selector2.id = maestrosCount + "-1"
+          selector2.required = 'required'
           selector2.classList.add("staging")
 
 
@@ -108,8 +176,9 @@ function loadWeek(week) {
           const selector1 = document.createElement("select")
 
 
-          selector1.id = maestrosCount
-          selector1.classList.add("speech")
+          selector1.id = maestrosCount;
+          selector1.required = 'required';
+          selector1.classList.add("speech");
 
 
           h3.append(selector1)
@@ -150,12 +219,15 @@ function loadWeek(week) {
           const selector2 = document.createElement("select")
 
           selector1.id = "vidaSelectorEstudio";
+          selector1.required = 'required'
           selector2.id = "vidaSelectorEstudioLectura";
+          selector2.required = 'required'
 
           h3.append(selector1)
           h3.append(selector2)
         } else {
           selector1.id = "vidaSelector" + maestrosCount + "_0"
+          selector1.required = 'required'
           selector1.classList.add("vidaSelector")
           h3.append(selector1)
         }
@@ -181,9 +253,10 @@ function loadDB() {
 
   const csv = sessionStorage.getItem("db")
 
-
-  data = parseToArray(csv, true)
-  data = data.slice(1)
+  var data = parseToArray(csv, true)
+  data = sort(data);
+  data = data.slice(1);
+  
 
   //Select Selectors
   const selectPresidente = document.querySelector("#asignadoPresidencia");
@@ -198,45 +271,48 @@ function loadDB() {
 
   selectPresidente.innerHTML = "<option>    </option>";
 
-  data.forEach(fila => {
+  data.filter(e => e[4] == "3").forEach(e => {
 
-    if (fila[4] == "3") {
-      const date = formatDate(fila[5])
 
-      const option = document.createElement("option")
-      option.textContent = ' ' + fila[1] + " " + fila[2] + " (" + date + ")"
-      selectPresidente.append(option)
-    }
+    const date = formatDate(e[5])
+
+    const option = document.createElement("option")
+    option.id = e[0]
+    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
+    selectPresidente.append(option)
+
   });
 
   //Llenar Discurso Tesoros
 
   selectTesoros.innerHTML = "<option>    </option>";
 
-  data.forEach(fila => {
+  data.filter(e => e[4] == "3" || e[4] == "2").forEach(e => {
 
-    if (fila[4] == "3" || fila[4] == "2") {
-      const date = formatDate(fila[5])
 
-      const option = document.createElement("option")
-      option.textContent = ' ' + fila[1] + " " + fila[2] + " (" + date + ")"
-      selectTesoros.append(option)
-    }
+    const date = formatDate(e[5])
+
+    const option = document.createElement("option")
+    option.id = e[0]
+    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
+    selectTesoros.append(option)
+
   });
 
   //Llenar Perlas
 
   selectPerlas.innerHTML = "<option>    </option>";
 
-  data.forEach(fila => {
+  data.filter(e => e[4] == "3" || e[4] == "2").forEach(e => {
 
-    if (fila[4] == "3" || fila[4] == "2") {
-      const date = formatDate(fila[5])
 
-      const option = document.createElement("option")
-      option.textContent = ' ' + fila[1] + " " + fila[2] + " (" + date + ")"
-      selectPerlas.append(option)
-    }
+    const date = formatDate(e[5])
+
+    const option = document.createElement("option")
+    option.id = e[0]
+    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
+    selectPerlas.append(option)
+
   });
 
   //Llenar Lectura
@@ -247,7 +323,8 @@ function loadDB() {
 
     const date = formatDate(e[5])
     const option = document.createElement("option")
-    option.textContent = ' ' + e[1] + " " + e[2] + " (" + date + ")"
+    option.id = e[0]
+    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
     selectLectura.append(option)
 
   });
@@ -268,7 +345,8 @@ function loadDB() {
 
       const date = formatDate(e[5])
       const option = document.createElement("option")
-      option.textContent = ' ' + e[1] + " " + e[2] + " (" + date + ")"
+      option.id = e[0]
+      option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
       select.append(option)
 
     });
@@ -283,8 +361,10 @@ function loadDB() {
 
 
       const option = document.createElement("option")
+
       const date = formatDate(e[5])
       const sex = sexIcon(e[3])
+      option.id = e[0]
       option.textContent = sex + e[1] + " " + e[2] + " (" + date + ")"
       select.append(option)
 
@@ -299,6 +379,7 @@ function loadDB() {
   const vidaSelectors = document.querySelectorAll("select.vidaSelector")
   const selectEstudio = document.querySelector("#vidaSelectorEstudio");
   const selectEstudioLectura = document.querySelector("#vidaSelectorEstudioLectura");
+  const selectOracionFinal = document.querySelector("#asignadoOracionFinal");
 
   //Llenar partes de Vida excepto Estudio
   vidaSelectors.forEach(select => {
@@ -308,8 +389,10 @@ function loadDB() {
     data.filter(e => Number(e[4]) > 1).forEach(e => {
 
       const option = document.createElement("option")
+
       const date = formatDate(e[5])
-      option.textContent = ' ' + e[1] + " " + e[2] + " (" + date + ")"
+      option.id = e[0]
+      option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
       select.append(option)
 
     });
@@ -325,7 +408,8 @@ function loadDB() {
 
     const option = document.createElement("option")
     const date = formatDate(e[5])
-    option.textContent = ' ' + e[1] + " " + e[2] + " (" + date + ")"
+    option.id = e[0]
+    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
     selectEstudio.append(option)
 
   });
@@ -337,7 +421,8 @@ function loadDB() {
 
     const option = document.createElement("option")
     const date = formatDate(e[5])
-    option.textContent = ' ' + e[1] + " " + e[2] + " (" + date + ")"
+    option.id = e[0]
+    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
     selectEstudioLectura.append(option)
 
   });
@@ -345,13 +430,15 @@ function loadDB() {
 
   //Llenar Oracion Final
 
+  selectOracionFinal.innerHTML = "<option>    </option>";
   data.filter(e => e[4] != "0" && e[3] == "H").forEach(e => {
 
 
     const option = document.createElement("option")
     const date = formatDate(e[5])
-    option.textContent = ' ' + e[1] + " " + e[2] + " (" + date + ")"
-    asignadoOracionFinal.append(option)
+    option.id = e[0]
+    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
+    selectOracionFinal.append(option)
 
   });
 
@@ -382,19 +469,12 @@ function formatDate(date) {
   return orderedDate;
 }
 
-
-//Array a CSV
-function createAndSaveCSV(csvArray, fileName, rowDelimiter = '\r\n') {
-  const csvString = csvArray.join(rowDelimiter)
-  fs.writeFileSync('filepathTo/ExampleCSV.csv', csvString)
-}
-
 //Ordernar el Array por Fecha
 function sort(csvArray, ascending = true) {
   const idxToSort = 5;
 
   //iterate over the whole table except row [0] as this is the headers
-  const sortedRows = csvArray.slice(1, csvArray.length).sort(function(a, b) {
+  const sortedRows = csvArray.slice(1, csvArray.length).sort(function (a, b) {
     if (ascending) return a[idxToSort] > b[idxToSort] ? 1 : -1
     return a[idxToSort] < b[idxToSort] ? 1 : -1
   })
@@ -415,8 +495,15 @@ function parseToArray(csvString) {
 function weekInputHandler() {
 
   const selector = document.querySelector("#weekSelector")
-  selector.addEventListener("change", function() { changeWeek() })
+  selector.addEventListener("change", function () { changeWeek() })
 
+  const submit = document.querySelector("#mainForm")
+
+  submit.addEventListener("submit", (e) => {
+    e.preventDefault();
+    saveDates();
+    savePDF();
+  })
 }
 
 
@@ -427,4 +514,4 @@ function changeWeek() {
   loadWeek(selection);
 }
 
-window.addEventListener("load", function() { weekInputHandler(); }, false);
+window.addEventListener("load", function () { weekInputHandler(); }, false);

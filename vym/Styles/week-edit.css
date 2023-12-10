@@ -20,9 +20,22 @@ ul {
 
 }
 
+img{
+    max-height: 40px;
+}
+
+option{
+
+    margin-left: 15px;
+    font-size: medium;
+    font-weight: bold;
+  
+}
+
 .hide-border{
     border-style: none;    
 }
+
 
 /* Titulos */
 
@@ -61,10 +74,12 @@ strong{
 select {
     margin-left: 15px;
     font-size: medium;
+    font-weight: bold;
 }
 
+
 button{
-    background-color: #2879ba; /* Green */
+    background-color: #2879ba;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -73,10 +88,20 @@ button{
     display: inline-block;
     font-size: 18px;
     transition-duration: 0.4s;
+    transition-duration: 0.3s;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 button:hover {
     background-color: white;
     color: black;
     border-color: #2879ba;
     border-style: solid;
+  }
+
+  
+  hr{
+    width: 55%;
+    margin-left:1%;
+    
   }

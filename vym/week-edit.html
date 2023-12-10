@@ -14,33 +14,19 @@
     <div>
         <!-- Control y seleccion de Semana-->
         <label for="week">Seleccionar Semana:</label>
-        <!--  <select name="week" id="weekSelector">
-        
-            <optgroup label="Semana">
-                <option>1-7 DE ENERO</option>
-                <option>8-14 DE ENERO</option>
-                <option>15-21 DE ENERO</option>
-                <option>22-28 DE ENERO</option>
-                <option>29 DE ENERO A 4 DE FEBRERO</option>
-                <option>5-11 DE FEBRERO</option>
-                <option>12-18 DE FEBRERO</option>
-            </optgroup>
-        
-        </select> -->
+     
         <input type="week" id="weekSelector" min="2024-W01">
 
-
-
-
     </div>
-
+    <form id="mainForm" >
     <div id="mainDiv" >
         <!-- Inicio de Formulario-->
+        
         <h1 id="semana"> SEMANA</h1>
         <h2 id="lecturaSemana" class="lecturaSemana"> LECTURA</h2>
         <hr>
         <h3><strong id="presidencia">Canción y oración | Palabras de introducción (1 min.) </strong>
-            <select label="Presidente" id="asignadoPresidencia">
+            <select required label="Presidente" id="asignadoPresidencia">
                 <option> </option>
             </select>
         </h3>
@@ -52,15 +38,15 @@
 
         <ul id="tesorosList">
             <li>
-                <h3 class="tesoros"><strong id="discursoTesoros"> 1. DISCURSO </strong></strong> <select
+                <h3 class="tesoros"><strong id="discursoTesoros"> 1. DISCURSO </strong></strong> <select required 
                         id="asignadoDiscursoTesoros"></select></h3>
             </li>
             <li></li>
-            <h3 class="tesoros"><strong> 2. Busquemos perlas escondidas </strong></strong> <select
+            <h3 class="tesoros"><strong> 2. Busquemos perlas escondidas </strong></strong> <select required
                     id="asignadoPerlas"></select></h3>
             </li>
             <li></li>
-            <h3 class="tesoros"><strong> 3. Lectura de la Biblia </strong></strong> <select
+            <h3 class="tesoros"><strong> 3. Lectura de la Biblia </strong></strong> <select required
                     id="asignadoLectura"></select>
             </h3>
             </li>
@@ -89,14 +75,15 @@
 
         <hr>
 
-        <h3><strong id="cancionFinal">Palabras de conclusión (3 mins.) | Canción 67 y oración </strong><select
-                id="asignadoOracionFinal">
+        <h3><strong id="cancionFinal">Palabras de conclusión (3 mins.) | Canción 67 y oración </strong><select 
+                id="asignadoOracionFinal" required>
                 <option></option>
             </select></h3>
-
     </div>
 
-    <button id="saveButton" onclick="savePDF()">Guardar!</button>
+    
+    <button id="saveButton" type="submit" >Guardar 🖫</button>
+</form>
 
     <div>
     </div>
