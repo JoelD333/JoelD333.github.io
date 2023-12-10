@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="Scripts/data-control.js"></script>
+    <link rel="stylesheet" href="Styles/data-control.css">
+    </link>
+
+</head>
+
+<body>
+    <div>
+        <table >
+            <thead>
+            <tr>
+                <th>
+                    <p>Nombre</p>
+                </th>
+                <th>
+                    <p>Apellido</p>
+                </th>
+                <th>
+                    <p>&#9893;</p>
+                </th>
+                <th>
+                    <p>Nombramiento</p>
+                </th>
+                <th>
+                    <p>Ultima Parte</p>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="dataTable">
+
+        </tbody>
+        </table>
+    </div>
+
+    <div>
+        <form id="addForm" action="javascript:;" onsubmit="addStudent()">
+            <p>Agregar Estudiante</p>
+            <div1>Nombre: <input id="inputName" required></div1> <br>
+           <div1> Apellido: <input id="inputLastName" required></div1> <br>
+          <div1>
+            <input type="radio" id="sex1" name="sex", value="H"> <label for="sex1label">Hombre</label> 
+            <input type="radio" id="sex2" name="sex", value="M"> <label for="sex2label">Mujer</label>
+        </div1>
+            <br>
+            <div1>    
+            <input type="radio" id="nombr1" name="nombr", value="0"> <label for="nombr1label">No bautizado</label> 
+            <input type="radio" id="nombr2" name="nombr", value="1"> <label for="nombr2label">Bautizado</label>
+            <input type="radio" id="nombr3" name="nombr", value="2"> <label for="nombr3label">SM</label> 
+            <input type="radio" id="nombr4" name="nombr", value="3"> <label for="nombr4label">Anciano</label>
+            <br>
+        </div1>
+
+        <input type="submit" value="Agregar">    
+        </form>
+
+    </div>
+    
+
+    <div>
+        <button id="saveFileButton" onclick="saveButton()">Guardar!</button>
+    </div>
+</body>
+
+</html>

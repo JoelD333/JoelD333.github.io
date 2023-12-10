@@ -1,0 +1,79 @@
+
+
+body{
+    background-color: white;
+    /*background-color: #f3f1ee ;*/
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow: hidden;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+div{
+
+    display: contents;
+
+}
+
+ul{
+    list-style-type: none;
+   
+}
+
+
+/* Titulos */
+
+.tesoros{
+    color: #2b6b76;
+    text-shadow: #c59776;
+}
+
+.maestros{
+    color: #9a6d16;
+    text-shadow: #fee8ac;
+}
+.lecturaSemana{
+    color: #2879ba;
+}
+
+.vida{
+    color: #a32826;
+}
+
+select{
+    margin-left: 15px;
+    font-size: medium;
+}
+
+table, th, td {
+    
+    border: 1px solid black;
+    border-collapse: collapse;
+    align-items: center;
+    padding: 5px;
+    text-align: center;
+  }
+
+  tr:nth-child(even) {
+    background-color: #D6EEEE;
+  }
+  td:hover {background-color: #eeeed6;}
+
+  input[type=submit] {
+    margin: 5px;
+  }
+
+  button{
+    align-self: center;
+    width: 60%;
+    height: 35px;
+  }

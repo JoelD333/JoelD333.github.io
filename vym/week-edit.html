@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    <script src="Scripts/week-edit.js"></script>
+    <link rel="stylesheet" href="Styles/week-edit.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+
+<body>
+
+    <div>
+        <!-- Control y seleccion de Semana-->
+        <label for="week">Seleccionar Semana:</label>
+        <!--  <select name="week" id="weekSelector">
+        
+            <optgroup label="Semana">
+                <option>1-7 DE ENERO</option>
+                <option>8-14 DE ENERO</option>
+                <option>15-21 DE ENERO</option>
+                <option>22-28 DE ENERO</option>
+                <option>29 DE ENERO A 4 DE FEBRERO</option>
+                <option>5-11 DE FEBRERO</option>
+                <option>12-18 DE FEBRERO</option>
+            </optgroup>
+        
+        </select> -->
+        <input type="week" id="weekSelector" min="2024-W01">
+
+
+
+
+    </div>
+
+    <div>
+        <!-- Inicio de Formulario-->
+        <h1 id="semana"> SEMANA</h1>
+        <h2 id="lecturaSemana" class="lecturaSemana"> LECTURA</h2>
+        <hr>
+        <h3><strong id="presidencia">Canción y oración | Palabras de introducción (1 min.) </strong>
+            <select label="Presidente" id="asignadoPresidencia">
+                <option> </option>
+            </select>
+        </h3>
+
+        <!-- TESOROS DE LA BIBLIA -->
+        <h2 class="tesoros"><img src="/Files/Icons/Treasures.png" style="width: 35px; margin-right: 10px;">
+            <strong>TESOROS DE LA BIBLIA </strong>
+        </h2>
+
+        <ul id="tesorosList">
+            <li>
+                <h3 class="tesoros"><strong id="discursoTesoros"> 1. DISCURSO </strong></strong> <select
+                        id="asignadoDiscursoTesoros"></select></h3>
+            </li>
+            <li></li>
+            <h3 class="tesoros"><strong> 2. Busquemos perlas escondidas </strong></strong> <select
+                    id="asignadoPerlas"></select></h3>
+            </li>
+            <li></li>
+            <h3 class="tesoros"><strong> 3. Lectura de la Biblia </strong></strong> <select
+                    id="asignadoLectura"></select>
+            </h3>
+            </li>
+
+        </ul>
+
+        <!-- SEAMOS MEJORES MAESTROS -->
+
+        <h2 class="maestros"><img src="/Files/Icons/Masters.png" style="width: 35px; margin-right: 10px;">
+            <strong>SEAMOS MEJORES MAESTROS</strong>
+        </h2>
+        <hr>
+        <ul id="maestrosList">
+
+        </ul>
+
+        <!-- NUESTRA VIDA CRISTIANA -->
+
+        <h2 class="vida"><img src="/Files/Icons/Living.png" style="width: 35px; margin-right: 10px;"> <strong>NUESTRA
+                VIDA CRISTIANA</strong></h2>
+        <hr>
+        <h3><strong id=cancionMedio> Cancion </strong></h3>
+        <ul id="vidaList">
+
+        </ul>
+
+        <hr>
+
+        <h3><strong id="cancionFinal">Palabras de conclusión (3 mins.) | Canción 67 y oración </strong><select
+                id="asignadoOracionFinal">
+                <option></option>
+            </select></h3>
+
+    </div>
+
+    <button id="a" onclick="test()">TEST</button>
+
+    <div>
+    </div>
+
+
+</body>
+
+
+</html>
