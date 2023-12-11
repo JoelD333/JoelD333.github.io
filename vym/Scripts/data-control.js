@@ -95,7 +95,7 @@ function deleteStudent(id) {
     //Prompt an alert
 
     swal({
-        buttons:["No","Si"],
+        buttons: ["No", "Si"],
         title: "¿Eliminar?",
         text: "Se eliminará por completo los datos de este Estudiante",
         icon: "warning",
@@ -216,18 +216,15 @@ function download_txt(textToSave) {
 
 
 
-
-
-
 window.addEventListener("load", function () { loadData(), formControl(); }, false);
 
 //Alertar si no se guardaron los cambios!
 
-// window.addEventListener('beforeunload', function (event) {
-//     if (!fileSaved) {
-//         const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
-//         event.returnValue = mensaje;
-//         return mensaje;
-//     }
-// });
+window.addEventListener('beforeunload', function (event) {
+    if (!fileSaved) {
+        const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
+        event.returnValue = mensaje;
+        return mensaje;
+     }
+});
 
