@@ -11,9 +11,6 @@ body {
     margin: 0%;
 }
 
-div{
-    margin-top: 50px;
-}
 
 table,
 th,
@@ -26,9 +23,9 @@ td {
 }
 
 table {
-    width: 99%;   
+    width: 99%;
     border-top: 0px;
-    border-bottom: 0px;    
+    border-bottom: 0px;
 }
 
 th {
@@ -54,7 +51,7 @@ tr:hover {
     background-color: #9dc5c2;
 }
 
-button {
+.save-button {
     background-color: #2879ba;
     border: none;
     color: white;
@@ -71,7 +68,8 @@ button {
 
 }
 
-button:hover {
+
+.save-button:hover {
     background-color: #ffffff;
     color: #2879ba;
 
@@ -90,7 +88,7 @@ button:hover {
     transition-duration: 0.3s;
     text-justify: auto;
     text-align: center;
-    
+
 }
 
 .delete-button:hover {
@@ -139,15 +137,6 @@ button:hover {
     grid-column: span 2;
 }
 
-input {
-    box-sizing: border-box;
-    font-weight: bold;
-    border: 2px solid rgb(173, 212, 209);
-    justify-self: center;
-    
-}
-
-
 .radio-group {
     width: max-content;
 }
@@ -191,8 +180,7 @@ input {
     font-size: medium;
 }
 
-label{
+label {
     font-size: large;
 
 }
-

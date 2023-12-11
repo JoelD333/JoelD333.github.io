@@ -92,11 +92,28 @@ function loadData() {
 //Funcion que elimina Student de la tabla con ID dado
 function deleteStudent(id) {
 
+    //Prompt an alert
 
-    const index = data.findIndex(e => e[0] == id)
-    data = data.slice(0, index).concat(data.slice(index + 1));
-    createAndSaveCSV(data);
-    fileSaved = false;
+    swal({
+        buttons:["No","Si"],
+        title: "¿Eliminar?",
+        text: "Se eliminará por completo los datos de este Estudiante",
+        icon: "warning",
+        dangerMode: true,
+    })
+        .then(willDelete => {
+            if (willDelete) {
+                //Delete User
+                const index = data.findIndex(e => e[0] == id)
+                data = data.slice(0, index).concat(data.slice(index + 1));
+                createAndSaveCSV(data);
+                fileSaved = false;
+
+                swal("Eliminado!", "Se ha eliminado este estudiante!", "success");
+            }
+        });
+
+
 
 }
 
@@ -107,6 +124,7 @@ function saveButton() {
     //Agregar funcion al boton de guardar   
     download_txt(sessionStorage.getItem("db"));
     fileSaved = true;
+    swal("Guardado!", "Se guardo el archivo", "success");
 }
 
 //CSV a Array
