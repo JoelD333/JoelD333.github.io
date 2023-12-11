@@ -1,6 +1,42 @@
 var weekDoc = "";
 
 
+
+function highlightDuplicated() {
+
+  const selects = document.querySelectorAll('select')
+
+
+
+  selects.forEach(select => {
+
+    select.addEventListener("change", function() {
+
+      select.classList.remove('duplicated');
+      const slctdIdx = select.selectedIndex
+
+      for (i = 0; i < selects.length; i++) {
+
+        const sel = selects[i];
+        if (selects[i] != select) {
+          if (select.options[slctdIdx].value == sel.options[sel.selectedIndex].value) {
+            select.classList.add('duplicated')
+          }
+        }
+
+      }
+
+
+
+    })
+
+
+  })
+}
+
+
+
+
 // Guarada la fecha de la semana en el DataArray y lo guarda
 function saveDates() {
 
@@ -46,7 +82,7 @@ function getDateOfWeek(week) {
 
   const date = new Date(y, 0, d)
 
-  const newDate = date.toISOString().slice(2,10);
+  const newDate = date.toISOString().slice(2, 10);
   return newDate;
 }
 
@@ -55,6 +91,7 @@ function getDateOfWeek(week) {
 function createAndSaveCSV(csvArray, fileName, rowDelimiter = '\r\n') {
 
   const csvString = csvArray.join(rowDelimiter);
+  sessionStorage.setItem("db", csvString)
   download_txt(csvString);
 
 }
@@ -256,7 +293,7 @@ function loadDB() {
   var data = parseToArray(csv, true)
   data = sort(data);
   data = data.slice(1);
-  
+
 
   //Select Selectors
   const selectPresidente = document.querySelector("#asignadoPresidencia");
@@ -443,6 +480,8 @@ function loadDB() {
   });
 
 
+  highlightDuplicated();
+
 }
 
 
@@ -474,7 +513,7 @@ function sort(csvArray, ascending = true) {
   const idxToSort = 5;
 
   //iterate over the whole table except row [0] as this is the headers
-  const sortedRows = csvArray.slice(1, csvArray.length).sort(function (a, b) {
+  const sortedRows = csvArray.slice(1, csvArray.length).sort(function(a, b) {
     if (ascending) return a[idxToSort] > b[idxToSort] ? 1 : -1
     return a[idxToSort] < b[idxToSort] ? 1 : -1
   })
@@ -495,7 +534,7 @@ function parseToArray(csvString) {
 function weekInputHandler() {
 
   const selector = document.querySelector("#weekSelector")
-  selector.addEventListener("change", function () { changeWeek() })
+  selector.addEventListener("change", function() { changeWeek() })
 
   const submit = document.querySelector("#mainForm")
 
@@ -504,6 +543,8 @@ function weekInputHandler() {
     saveDates();
     savePDF();
   })
+
+
 }
 
 
@@ -514,4 +555,4 @@ function changeWeek() {
   loadWeek(selection);
 }
 
-window.addEventListener("load", function () { weekInputHandler(); }, false);
+window.addEventListener("load", function() { weekInputHandler(); }, false);

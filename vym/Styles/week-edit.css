@@ -1,107 +1,89 @@
 @font-face {
-    font-family: NotoSans;
-    src: url(/Files/Fonts/NotoSans-Regular.ttf);
+  font-family: NotoSans;
+  src: url(/Files/Fonts/NotoSans-Regular.ttf);
 }
 
-html { 
-    scroll-behavior: smooth;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-    background-color: #f3f1ee;
-    width: 100vw;
-    height: 95dvh;
-    font-family: arial, sans-serif;
+  background-color: #f3f1ee;
+  width: 100vw;
+  height: 95dvh;
+  font-family: arial, sans-serif;
 
+}
+
+.duplicated {
+  text-decoration: underline;
+    color: red;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 
 }
 
-img{
-    max-height: 40px;
+.hide-border {
+  border-style: none;
 }
-
-option{
-
-    margin-left: 15px;
-    font-size: medium;
-    font-weight: bold;
-  
-}
-
-.hide-border{
-    border-style: none;    
-}
-
 
 /* Titulos */
 
 .tesoros {
-    color: #2b6b76;
-    text-shadow: #c59776;
-    align-content: center;
+  color: #2b6b76;
+  text-shadow: #c59776;
+  align-content: center;
 
 }
 
 
 h2 {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
 }
 
-strong{
-    padding-top: 5px;
+strong {
+  padding-top: 5px;
 }
 
 
 .maestros {
-    color: #9a6d16;
-    text-shadow: #fee8ac;
+  color: #9a6d16;
+  text-shadow: #fee8ac;
 }
 
 .lecturaSemana {
-    color: #2879ba;
+  color: #2879ba;
 }
 
 .vida {
-    color: #a32826;
+  color: #a32826;
 }
 
 select {
-    margin-left: 15px;
-    font-size: medium;
-    font-weight: bold;
+  margin-left: 15px;
+  font-size: medium;
 }
 
-
-button{
-    background-color: #2879ba;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 18px;
-    transition-duration: 0.4s;
-    transition-duration: 0.3s;
-    margin-left: 10px;
-    margin-top: 10px;
+button {
+  background-color: #2879ba;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  transition-duration: 0.4s;
 }
+
 button:hover {
-    background-color: white;
-    color: black;
-    border-color: #2879ba;
-    border-style: solid;
-  }
-
-  
-  hr{
-    width: 55%;
-    margin-left:1%;
-    
-  }
+  background-color: white;
+  color: black;
+  border-color: #2879ba;
+  border-style: solid;
+}
