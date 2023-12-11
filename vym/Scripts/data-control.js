@@ -9,19 +9,35 @@ function loadData() {
     table.innerHTML = ""
 
     for (let rowIdx = 1; rowIdx < data.length - 1; rowIdx++) {
-        // console.log(row)
         const tableRow = table.insertRow();
-
-
         const row = data[rowIdx];
-        for (let i = 1; i < row.length - 1; i++) {
+
+
+        //Agregar Datos
+        for (let i = 0; i < row.length; i++) {
+
 
             tableCell = document.createElement("td");
 
-
             switch (i) {
-                //Caso Columna sexo (3)
 
+                //Caso Columna id (3)
+                //Agregar boton de eliminar!!
+                case 0:
+                    const button = document.createElement("button")
+                    button.classList.add("delete-button")
+                    button.textContent = '🗙'
+
+                    button.addEventListener("click", function () { deleteStudent(row[i]) })
+
+                    tableCell.appendChild(button)
+                    tableRow.appendChild(tableCell)
+                    break;
+
+
+
+
+                //Caso Columna sexo (3)
                 case 3:
                     switch (row[i]) {
                         case "H":
@@ -32,6 +48,9 @@ function loadData() {
                             tableCell.innerHTML = "🚺";
                             break;
                     }
+                    tableRow.insertBefore(tableCell, tableRow.lastChild)
+                    break;
+
 
                 //Caso Columna nombramiento (4)
                 case 4:
@@ -51,22 +70,38 @@ function loadData() {
                             tableCell.innerHTML = "Anciano";
                             break;
                     }
+                    tableRow.insertBefore(tableCell, tableRow.lastChild)
                     break;
 
+
+                //Caso default
                 default:
                     tableCell.innerHTML = row[i];
+                    tableRow.insertBefore(tableCell, tableRow.lastChild)
                     break;
 
+
             }
-            tableRow.appendChild(tableCell)
-
-
 
         }
 
     }
 }
 
+
+//Funcion que elimina Student de la tabla con ID dado
+function deleteStudent(id) {
+
+
+    const index = data.findIndex(e => e[0] == id)
+    data = data.slice(0, index).concat(data.slice(index + 1));
+    createAndSaveCSV(data);
+    fileSaved = false;
+
+}
+
+
+//Funcion para guardar los datos editados
 function saveButton() {
 
     //Agregar funcion al boton de guardar   
@@ -82,28 +117,23 @@ function parseToArray(csvString) {
     })
 }
 
+
+//Funcion para agregar estudiante
 function addStudent() {
     const nombr = document.querySelector('input[name="nombr"]:checked')
     const sex = document.querySelector('input[name="sex"]:checked')
     const name = document.querySelector('#inputName')
     const lastName = document.querySelector('#inputLastName')
 
-    if (nombr == null || sex == null) {
-        alert("Rellenar todos los campos!");
-    } else {
+    const newStudent = [getNewId(), name.value, lastName.value, sex.value, nombr.value, ""]
+    const csvEndline = ["", "", "", "", "", ""]
 
+    data.pop();
+    data.push(newStudent);
+    data.push(csvEndline)
+    createAndSaveCSV(data);
+    fileSaved = false;
 
-        const newStudent = [getNewId(), name.value, lastName.value, sex.value, nombr.value, "", ""]
-        const csvEndLine = ["", "", "", "", "", "", ""]
-
-
-        data.pop();
-        data.push(newStudent);
-        data.push(csvEndLine);
-
-        createAndSaveCSV(data);
-        fileSaved = false;
-    }
 
 
 }
@@ -174,11 +204,12 @@ function download_txt(textToSave) {
 window.addEventListener("load", function () { loadData(), formControl(); }, false);
 
 //Alertar si no se guardaron los cambios!
-window.addEventListener('beforeunload', function (event) {
-    if (!fileSaved) {
-        const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
-        event.returnValue = mensaje;
-        return mensaje;
-    }
-});
+
+// window.addEventListener('beforeunload', function (event) {
+//     if (!fileSaved) {
+//         const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
+//         event.returnValue = mensaje;
+//         return mensaje;
+//     }
+// });
 

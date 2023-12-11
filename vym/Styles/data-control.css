@@ -1,79 +1,198 @@
-
-
-body{
-    background-color: white;
-    /*background-color: #f3f1ee ;*/
-    width: 100%;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+body {
+    background-color: #f3f1ee;
     overflow: hidden;
-}
-
-
-form{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+    font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    width: 100%;
+    height: 95svh;
+    grid-template-columns: 30svw 70svw;
+    grid-template-rows: auto auto;
+    align-content: space-around;
+    margin: 0%;
 }
 
 div{
+    margin-top: 50px;
+}
 
-    display: contents;
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    height: fit-content;
+    padding: 5px;
+}
+
+table {
+    width: 99%;   
+    border-top: 0px;
+    border-bottom: 0px;    
+}
+
+th {
+    background: #b9d3d3;
+    border-top: 0px;
+    border-bottom: 0px;
+}
+
+tr:nth-child(even) {
+    background-color: #e0ebeb;
+}
+
+tr:nth-child(odd) {
+    background: #F8F6F4;
+}
+
+td:nth-child(3) {
+    font-size: x-large;
 
 }
 
-ul{
-    list-style-type: none;
-   
+tr:hover {
+    background-color: #9dc5c2;
 }
 
+button {
+    background-color: #2879ba;
+    border: none;
+    color: white;
+    margin-top: 20px;
+    width: 25%;
+    height: 45px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    transition-duration: 0.3s;
+    border: 2px solid #2879ba;
 
-/* Titulos */
-
-.tesoros{
-    color: #2b6b76;
-    text-shadow: #c59776;
 }
 
-.maestros{
-    color: #9a6d16;
-    text-shadow: #fee8ac;
-}
-.lecturaSemana{
+button:hover {
+    background-color: #ffffff;
     color: #2879ba;
+
 }
 
-.vida{
-    color: #a32826;
+
+.delete-button {
+    background-color: #2879ba;
+    margin: 0;
+    border: none;
+    color: white;
+    width: 40px;
+    height: 100%;
+    font-size: medium;
+    transition-duration: 0.4s;
+    transition-duration: 0.3s;
+    text-justify: auto;
+    text-align: center;
+    
 }
 
-select{
-    margin-left: 15px;
+.delete-button:hover {
+    background-color: #df776c;
+}
+
+.form-div {
+    grid-column: 1;
+    grid-row: 1;
+    border: 1px solid black;
+    border-right: 0px;
+}
+
+.table-div {
+    overflow: auto;
+    grid-row: 1;
+    grid-column: 2;
+    border: 1px solid black;
+}
+
+.save-div {
+    margin-top: 20px;
+    grid-row: 2;
+    grid-column: 1/ -1;
+    justify-content: center;
+    justify-items: center;
+    display: flex;
+}
+
+
+.add-form {
+
+    box-sizing: border-box;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 45% 45%;
+    gap: 0.5rem 10px;
+    text-align: start;
+    height: 100%;
+    align-content: start;
+    justify-content: center;
+
+}
+
+.form-full-width {
+    grid-column: span 2;
+}
+
+input {
+    box-sizing: border-box;
+    font-weight: bold;
+    border: 2px solid rgb(173, 212, 209);
+    justify-self: center;
+    
+}
+
+
+.radio-group {
+    width: max-content;
+}
+
+.form-header {
+
+    width: 100%;
+    font-weight: bold;
+    font-size: large;
+    margin: 0px;
+    text-align: center;
+    padding-top: 3%;
+}
+
+
+.submit-button {
+    background-color: #2879ba;
+    border: none;
+    color: white;
+    margin-top: 20px;
+    width: 45%;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    transition-duration: 0.3s;
+    border: 2px solid #2879ba;
+
+}
+
+.submit-button:hover {
+    background-color: #ffffff;
+    color: #2879ba;
+
+}
+
+.input-text {
+    width: 100%;
     font-size: medium;
 }
 
-table, th, td {
-    
-    border: 1px solid black;
-    border-collapse: collapse;
-    align-items: center;
-    padding: 5px;
-    text-align: center;
-  }
+label{
+    font-size: large;
 
-  tr:nth-child(even) {
-    background-color: #D6EEEE;
-  }
-  td:hover {background-color: #eeeed6;}
+}
 
-  input[type=submit] {
-    margin: 5px;
-  }
-
-  button{
-    align-self: center;
-    width: 60%;
-    height: 35px;
-  }
