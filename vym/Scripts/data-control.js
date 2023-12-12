@@ -151,9 +151,6 @@ function addStudent() {
     data.push(csvEndline)
     createAndSaveCSV(data);
     fileSaved = false;
-
-
-
 }
 
 
@@ -214,17 +211,43 @@ function download_txt(textToSave) {
 
 }
 
+//Funcion para filtrar en la tabla
+
+function tableFilter(inputValue) {
+    const tabla = document.querySelector("#dataTable")
+
+
+    for (let index = 0; index < tabla.rows.length; index++) {
+        const row = tabla.rows[index];
+        var rowValue = ""
+
+        for (let cellIdx = 0; cellIdx < row.cells.length; cellIdx++) {
+            const cell = row.cells[cellIdx];
+            rowValue += cell.textContent;
+        }
+
+
+        rowValue = rowValue.toLowerCase();
+        inputValue = inputValue.toLowerCase();
+        if(!rowValue.includes(inputValue)){
+            row.style.display = 'none'
+        }else{
+            row.style.display = ''
+        }
+
+    }
+}
 
 
 window.addEventListener("load", function () { loadData(), formControl(); }, false);
 
 //Alertar si no se guardaron los cambios!
 
-window.addEventListener('beforeunload', function (event) {
-    if (!fileSaved) {
-        const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
-        event.returnValue = mensaje;
-        return mensaje;
-     }
-});
+// window.addEventListener('beforeunload', function (event) {
+//     if (!fileSaved) {
+//         const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
+//         event.returnValue = mensaje;
+//         return mensaje;
+//      }
+// });
 

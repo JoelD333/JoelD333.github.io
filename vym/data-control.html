@@ -49,16 +49,16 @@
             <div1> <input id="inputLastName" class="input-text" placeholder="Apellido" required></div1> 
             <br>
             <div1 class="form-full-width radio-group">
-                <input type="radio" id="sex1" name="sex" , value="H" required> <label for="sex1label">Hombre</label>
-                <input type="radio" id="sex2" name="sex" , value="M"> <label for="sex2label">Mujer</label>
+                <input type="radio" id="sex1" name="sex" , value="H" required> <label for="sex1">Hombre</label>
+                <input type="radio" id="sex2" name="sex" , value="M"> <label for="sex2">Mujer</label>
             </div1>
             <br>
             <div1 class="form-full-width radio-group">
-                <input type="radio" id="nombr1" name="nombr" , value="0" required> <label for="nombr1label">No
+                <input type="radio" id="nombr1" name="nombr" , value="0" required> <label for="nombr1">No
                     bautizado</label>
-                <input type="radio" id="nombr2" name="nombr" , value="1"> <label for="nombr2label">Bautizado</label>
-                <input type="radio" id="nombr3" name="nombr" , value="2"> <label for="nombr3label">SM</label>
-                <input type="radio" id="nombr4" name="nombr" , value="3"> <label for="nombr4label">Anciano</label>
+                <input type="radio" id="nombr2" name="nombr" , value="1"> <label for="nombr2">Bautizado</label>
+                <input type="radio" id="nombr3" name="nombr" , value="2"> <label for="nombr3">SM</label>
+                <input type="radio" id="nombr4" name="nombr" , value="3"> <label for="nombr4">Anciano</label>
                 <br>
             </div1>
 
@@ -67,6 +67,9 @@
 
     </div>
 
+    <div class="search-div">
+        <input id="filterInput" class="search-input" type="text" oninput="tableFilter(this.value)" placeholder="Filtrar">
+    </div>
 
     <div class="save-div">
         <button id="saveFileButton" class="save-button" onclick="saveButton()">Guardar!</button>
