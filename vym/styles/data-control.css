@@ -6,7 +6,7 @@ body {
     width: 100%;
     height: 95svh;
     grid-template-columns: max-content auto;
-    grid-template-rows: 45svh 45svh 10svh;
+    grid-template-rows: 50svh 50svh;
     align-content: start;
     margin: 0%;
     margin-top: 10px;
@@ -21,8 +21,7 @@ td {
     text-align: center;
     height: fit-content;
     padding: 5px;
-
-
+    width: min-content;
 }
 
 table {
@@ -35,6 +34,8 @@ th {
     background-color: #7ca8c2;
     color: #ffffff;
     text-align: center;
+    cursor: pointer;
+    padding: 20px;
 }
 
 tr:nth-child(even) {
@@ -54,12 +55,13 @@ tr:hover {
     background-color: #9dc5c2;
 }
 
-.save-button {
+.blue-button {
+
     background-color: #2879ba;
     border: none;
     color: white;
     margin-top: 20px;
-    width: 25%;
+    width: 85%;
     height: 45px;
     text-align: center;
     text-decoration: none;
@@ -67,21 +69,23 @@ tr:hover {
     font-size: 16px;
     transition-duration: 0.4s;
     transition-duration: 0.3s;
-    border: 2px solid #2879ba;
+    border: 2px solid #2879ba;    
+    justify-self: center;
+    margin-bottom: 25px;
 
 }
 
 
-.save-button:hover {
+.blue-button:hover {
     background-color: #ffffff;
     color: #2879ba;
 
 }
 
 
-.delete-button {
+.edit-button {
     background-color: #2879ba;
-    margin: 0;
+    margin: 0px 5px;
     border: none;
     color: white;
     width: 33px;
@@ -92,7 +96,7 @@ tr:hover {
     text-align: center;
 }
 
-.delete-button:hover {
+.edit-button:hover {
     background-color: #df776c;
 }
 
@@ -101,18 +105,19 @@ tr:hover {
     grid-row: 1;
     border: 1px solid #98b9d3;
     border-right: 0px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);    
 }
 
-.search-div {
+.control-div {
     grid-column: 1;
     grid-row: 2;
     border: 1px solid #98b9d3;
     border-right: 0px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     display: flex;
-    align-items: end;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
 }
 
 .table-div {
@@ -121,20 +126,10 @@ tr:hover {
     grid-column: 2;
 }
 
-.save-div {
-    margin-top: 20px;
-    grid-row: 3;
-    grid-column: 1/ -1;
-    justify-content: center;
-    justify-items: center;
-    display: flex;
-}
-
 
 .add-form {
 
-    box-sizing: border-box;
-    padding: 1rem;
+    box-sizing: border-box;    
     display: grid;
     grid-template-columns: 45% 45%;
     gap: 0.5rem 10px;
@@ -142,6 +137,7 @@ tr:hover {
     height: 100%;
     align-content: start;
     justify-content: center;
+    margin: 0px;
 
 }
 
@@ -164,29 +160,6 @@ tr:hover {
 }
 
 
-.submit-button {
-    background-color: #2879ba;
-    border: none;
-    color: white;
-    margin-top: 20px;
-    width: 45%;
-    height: 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    transition-duration: 0.4s;
-    transition-duration: 0.3s;
-    border: 2px solid #2879ba;
-
-}
-
-.submit-button:hover {
-    background-color: #ffffff;
-    color: #2879ba;
-
-}
-
 .input-text {
     width: 100%;
     font-size: medium;
@@ -194,11 +167,56 @@ tr:hover {
 
 .search-input {
     font-size: larger;
-    width: 80%;
-    margin-bottom: 5px;
+    width: 83%;
 }
 
 label {
     font-size: large;
 
 }
+
+
+.edit-dialog {
+    display: none;
+    position: fixed; 
+    z-index: 1; 
+    margin: 0;
+    margin-left: auto;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+  }
+  
+  /* Modal Content/Box */
+  .edit-dialog-content {
+    background-color: #F8F6F4;
+    box-sizing: border-box;    
+    display: grid;
+    grid-template-columns: 45% 45%;
+    gap: 0.5rem 10px;
+    text-align: start;
+    width: max-content;
+    align-content: start;
+    justify-self: center;
+    align-self: center;
+    padding: 20px 100px;
+    
+  }
+
+  /* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    justify-self: end;
+    grid-column: 2;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }

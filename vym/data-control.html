@@ -2,7 +2,9 @@
 <html>
 
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="icon" type="image/x-icon" href="./Files/favicon.ico">
     <script src="./scripts/data-control.js"></script>
     <link rel="stylesheet" href="styles/data-control.css">
@@ -15,23 +17,28 @@
         <table>
             <thead>
                 <tr>
-                    <th>
-                        <p>Nombre</p>
+                    <th onclick="sortTable(1, this)" data-ot="Nombre⠀">
+                        Nombre⠀
                     </th>
-                    <th>
-                        <p>Apellido</p>
+
+                    <th onclick="sortTable(2, this)" data-ot="Apellido  ">
+                        Apellido⠀
                     </th>
-                    <th>
-                        <p>&#9893;</p>
+
+                    <th onclick="sortTable(3, this)" data-ot="&#9893;⠀">
+                        &#9893;⠀
                     </th>
-                    <th>
-                        <p>Nombramiento</p>
+
+                    <th onclick="sortTable(4, this)" data-ot="Nombramiento⠀">
+                        Nombramiento⠀
                     </th>
-                    <th>
-                        <p>Ultima Parte</p>
+
+                    <th onclick="sortTable(5, this)" data-ot="Ultima Parte⠀">
+                        Ultima Parte⠀
                     </th>
-                    <th>
-                        <p>Eliminar</p>
+
+                    <th style="cursor: default;" data-ot="Modificar">
+                        Modificar
                     </th>
                 </tr>
             </thead>
@@ -42,11 +49,11 @@
     </div>
 
     <div class="form-div">
-        <p class="form-full-width form-header">Agregar Estudiante</p>
+
         <form id="addForm" class="add-form" action="javascript:;" onsubmit="addStudent()">
-           
-            <div1><input id="inputName" class="input-text" placeholder="Nombre" required></div1>             
-            <div1> <input id="inputLastName" class="input-text" placeholder="Apellido" required></div1> 
+            <p class="form-full-width form-header">Agregar Estudiante</p>
+            <div1><input id="inputName" class="input-text" placeholder="Nombre" required></div1>
+            <div1> <input id="inputLastName" class="input-text" placeholder="Apellido" required></div1>
             <br>
             <div1 class="form-full-width radio-group">
                 <input type="radio" id="sex1" name="sex" , value="H" required> <label for="sex1">Hombre</label>
@@ -62,18 +69,48 @@
                 <br>
             </div1>
 
-            <input class="form-full-width submit-button" type="submit" value="Agregar">
+            <input class="form-full-width blue-button" type="submit" value="Agregar">
         </form>
 
     </div>
 
-    <div class="search-div">
-        <input id="filterInput" class="search-input" type="text" oninput="tableFilter(this.value)" placeholder="Filtrar">
+    <div class="control-div">
+        <input id="filterInput" class="search-input" type="text" oninput="tableFilter(this.value)"
+            placeholder="Filtrar">
+        <button id="saveFileButton" class="blue-button" onclick="saveButton()">Guardar 🖫</button>
     </div>
 
-    <div class="save-div">
-        <button id="saveFileButton" class="save-button" onclick="saveButton()">Guardar!</button>
+
+
+
+    <div id="editDialog" class="edit-dialog form-div">            
+
+            <form id="editForm" class="edit-dialog-content" action="javascript:;" onsubmit="saveStudent()">
+                <span id="formCloseButton" class="close">&times;</span>
+                <p class="form-full-width form-header">Editar Estudiante</p>
+
+                <div1><input id="inputName" class="input-text" placeholder="Nombre" required></div1>
+                <div1> <input id="inputLastName" class="input-text" placeholder="Apellido" required></div1>
+                <br>
+                <div1 class="form-full-width radio-group">
+                    <input type="radio" id="sex1" name="sex" , value="H" required> <label for="sex1">Hombre</label>
+                    <input type="radio" id="sex2" name="sex" , value="M"> <label for="sex2">Mujer</label>
+                </div1>
+                <br>
+                <div1 class="form-full-width radio-group">
+                    <input type="radio" id="nombr1" name="nombr" , value="0" required> <label for="nombr1">No
+                        bautizado</label>
+                    <input type="radio" id="nombr2" name="nombr" , value="1"> <label for="nombr2">Bautizado</label>
+                    <input type="radio" id="nombr3" name="nombr" , value="2"> <label for="nombr3">SM</label>
+                    <input type="radio" id="nombr4" name="nombr" , value="3"> <label for="nombr4">Anciano</label>
+                    <br>
+                </div1>
+    
+                <input class="form-full-width blue-button" type="submit" value="Guardar">
+            </form>            
+
     </div>
+
 </body>
 
 </html>

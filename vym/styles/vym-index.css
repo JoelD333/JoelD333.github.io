@@ -33,7 +33,7 @@ input {
 }
 
 
-button {
+.blue-button {
   background-color: #2879ba;
   border: none;
   color: white;
@@ -52,7 +52,7 @@ button {
 
 }
 
-button:hover {
+.blue-button:hover {
   background-color: #ffffff;
   color: #2879ba;
 

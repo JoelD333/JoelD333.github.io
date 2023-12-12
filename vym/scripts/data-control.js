@@ -1,8 +1,12 @@
 var data = []
 var fileSaved = false
+var editedIndex = -1
+
+
 function loadData() {
 
     const csv = sessionStorage.getItem("db")
+
     data = parseToArray(csv)
 
     table = document.querySelector("#dataTable")
@@ -24,14 +28,20 @@ function loadData() {
                 //Caso Columna id (3)
                 //Agregar boton de eliminar!!
                 case 0:
-                    const button = document.createElement("button")
-                    button.classList.add("delete-button")
-                    button.textContent = '🗙'
+                    const deleteButton = document.createElement("button")
+                    deleteButton.classList.add("edit-button")
+                    deleteButton.textContent = '🗙'
+                    deleteButton.addEventListener("click", function () { deleteStudent(row[i]) })
 
-                    button.addEventListener("click", function () { deleteStudent(row[i]) })
+                    const editButton = document.createElement("button")
+                    editButton.classList.add("edit-button")
+                    editButton.textContent = '✎'
+                    editButton.addEventListener("click", function () { editStudent(row[i]) })
 
-                    tableCell.appendChild(button)
-                    tableRow.appendChild(tableCell)
+
+                    tableCell.appendChild(editButton);
+                    tableCell.appendChild(deleteButton);
+                    tableRow.appendChild(tableCell);
                     break;
 
 
@@ -138,13 +148,15 @@ function parseToArray(csvString) {
 
 //Funcion para agregar estudiante
 function addStudent() {
-    const nombr = document.querySelector('input[name="nombr"]:checked')
-    const sex = document.querySelector('input[name="sex"]:checked')
-    const name = document.querySelector('#inputName')
-    const lastName = document.querySelector('#inputLastName')
 
-    const newStudent = [getNewId(), name.value, lastName.value, sex.value, nombr.value, ""]
-    const csvEndline = ["", "", "", "", "", ""]
+    const form = document.querySelector("#addForm");
+    const nombr = form.querySelector('input[name="nombr"]:checked');
+    const sex = form.querySelector('input[name="sex"]:checked');
+    const name = form.querySelector('#inputName');
+    const lastName = form.querySelector('#inputLastName');
+
+    const newStudent = [getNewId(), name.value, lastName.value, sex.value, nombr.value, ""];
+    const csvEndline = ["", "", "", "", "", ""];
 
     data.pop();
     data.push(newStudent);
@@ -153,6 +165,30 @@ function addStudent() {
     fileSaved = false;
 }
 
+//Funcion para editar estudiante
+//Toma los datos del forulario y los agrega al dataFile, luego los guarda y recarga la tabla.
+function saveStudent() {
+
+    console.log("here");
+
+    const form = document.querySelector("#editForm");
+    const nombr = form.querySelector('input[name="nombr"]:checked');
+    const sex = form.querySelector('input[name="sex"]:checked');
+    const name = form.querySelector('#inputName');
+    const lastName = form.querySelector('#inputLastName');
+
+
+    data[editedIndex][1] = name.value;
+    data[editedIndex][2] = lastName.value;
+    data[editedIndex][3] = sex.value;
+    data[editedIndex][4] = nombr.value;
+   
+    
+    document.querySelector("#editDialog").style.display = 'none';
+    
+    createAndSaveCSV(data);
+    fileSaved = false;
+}
 
 //Busca ultima Id del Array y Retorna LastID++
 function getNewId() {
@@ -236,7 +272,106 @@ function tableFilter(inputValue) {
         }
 
     }
+
+    sortTable(2);
 }
+
+//Ordenar tabla
+function sortTable(column, th) {
+
+    const csv = sessionStorage.getItem("db")
+
+    const actual = parseToArray(csv)
+
+
+
+    //Ordenar segun columna
+    var sortedData = actual.sort(function (a, b) {
+
+
+        if (a[column] < b[column]) {
+            return -1;
+        }
+        if (a[column] < b[column]) {
+            return 1;
+        }
+        return 0;
+    });
+
+    //Reiniciar Headers
+
+    const headers = document.querySelectorAll("th")
+
+    headers.forEach(header => {
+        header.innerText = header.dataset.ot;
+    });
+
+    //Chequear si ya estaba ordenado asi e invertir el orden si es asi 
+    //Agregar flechita que indica direccion
+    if (sortedData.toString() === data.toString()) {
+        sortedData.reverse()
+        th.innerText = th.dataset.ot.slice(0, -1) + "▾"
+    } else {
+        th.innerText = th.dataset.ot.slice(0, -1) + "▴"
+    }
+
+
+
+    createAndSaveCSV(sortedData);
+}
+
+
+//Muestra el formulario para editar el Estudiante y carga los datos con el index elegido
+function editStudent(id) {
+
+
+    editedIndex = data.findIndex(e => e[0] == id);
+    const student = data[editedIndex];
+
+    const editDialog = document.querySelector("#editDialog");
+    editDialog.style.display = 'grid'
+
+    editDialog.querySelector("#formCloseButton").addEventListener("click", function () {
+        editDialog.style.display = 'none';
+    })
+
+    const name = editDialog.querySelector("#inputName");
+    const lastName = editDialog.querySelector("#inputLastName");
+    const nombr = editDialog.querySelectorAll('input[name="nombr"]');
+    const sex = editDialog.querySelectorAll('input[name="sex"]');
+
+    name.value = student[1];
+    lastName.value = student[2];
+
+    switch (student[3]) {
+
+        case "H":
+            sex[0].checked = true;
+            break;
+        case "M":
+            sex[1].checked = true;
+            break;
+    }
+
+    switch (student[4]) {
+
+        case "0":
+            nombr[0].checked = true;
+            break;
+        case "1":
+            nombr[1].checked = true;
+            break;
+        case "2":
+            nombr[2].checked = true;
+            break;
+        case "3":
+            nombr[3].checked = true;
+            break;
+    }
+
+
+}
+
 
 
 window.addEventListener("load", function () { loadData(), formControl(); }, false);
@@ -250,4 +385,3 @@ window.addEventListener('beforeunload', function (event) {
         return mensaje;
     }
 });
-
