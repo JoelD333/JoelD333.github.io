@@ -229,9 +229,9 @@ function tableFilter(inputValue) {
 
         rowValue = rowValue.toLowerCase();
         inputValue = inputValue.toLowerCase();
-        if(!rowValue.includes(inputValue)){
+        if (!rowValue.includes(inputValue)) {
             row.style.display = 'none'
-        }else{
+        } else {
             row.style.display = ''
         }
 
@@ -243,11 +243,11 @@ window.addEventListener("load", function () { loadData(), formControl(); }, fals
 
 //Alertar si no se guardaron los cambios!
 
-// window.addEventListener('beforeunload', function (event) {
-//     if (!fileSaved) {
-//         const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
-//         event.returnValue = mensaje;
-//         return mensaje;
-//      }
-// });
+window.addEventListener('beforeunload', function (event) {
+    if (!fileSaved) {
+        const mensaje = '¡Atención! Estás intentando cerrar la página sin guardar los cambios!.';
+        event.returnValue = mensaje;
+        return mensaje;
+    }
+});
 
