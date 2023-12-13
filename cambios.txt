@@ -4,7 +4,7 @@ Posibles cambios del proyecto:
 
     Algunos scripts son repetitivos, ejemplos dentro de scripts/grupo.js:
 
-            ```javascript
+            ```jsx
             // URL de la API de Google Sheets
 
             var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=284054636&single=true&widget=false&headers=false&chrome=false";
