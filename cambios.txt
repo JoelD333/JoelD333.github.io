@@ -1,0 +1,67 @@
+Posibles cambios del proyecto:
+
+1. Optimizacion y legibilidad:
+
+    Algunos scripts son repetitivos, ejemplos dentro de scripts/grupo.js:
+
+            ```javascript
+            // URL de la API de Google Sheets
+
+            var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=284054636&single=true&widget=false&headers=false&chrome=false";
+            var hoja2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=2036176846&single=true&widget=false&headers=false&chrome=false";
+            var hoja3Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=321154631&single=true&widget=false&headers=false&chrome=false";
+            var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=0&single=true&widget=false&headers=false&chrome=false";
+            var hoja5Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=1184309177&single=true&widget=false&headers=false&chrome=false";
+
+            var dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
+
+            const hojas = [hoja1Url, hoja2Url, hoja3Url, hoja4Url, hoja5Url]
+            const fechas = [];
+
+            var hojaActual = 0;
+
+            //Número más cercano, retorna índice del array
+            const closestIndex = (num, arr) => {
+            let curr = arr[0],
+                diff = Math.abs(num - curr);
+            let index = 0;
+            for (let val = 0; val < arr.length; val++) {
+                let newdiff = Math.abs(num - arr[val]);
+                if (newdiff < diff) {
+                diff = newdiff;
+                curr = arr[val];
+                index = val;
+                };
+            };
+            return index;
+            };
+   
+            //Menos comentarios, mas nombre descriptivos
+            //Menos repeticion funciones, variables locales
+            
+            //Posibles cambios (no los prove)
+            const baseSheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?single=true&widget=false&headers=false&chrome=false";
+
+            const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
+
+            const sheet = [
+                "gid=284054636",
+                "gid=2036176846",
+                "gid=321154631",
+                "gid=0",
+                "gid=1184309177"
+            ];
+
+            const currentSheet = 0;
+            const currentSheetUrl = `${baseSheet}?${sheet[currentSheet]}`;
+
+            const fechas = [];
+
+            const closestIndex = (num, arr) => {
+                let index = arr.reduce((closestIndex, currentVal, currentIndex) => {
+                    const currentDiff = Math.abs(num - currentVal);
+                    const closestDiff = Math.abs(num - arr[closestIndex]);
+                    return (currentDiff < closestDiff) ? currentIndex : closestIndex;
+                }, 0);
+                return index;
+            };
