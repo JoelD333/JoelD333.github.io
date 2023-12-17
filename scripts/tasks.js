@@ -1,23 +1,16 @@
 // URL de la API de Google Sheets
 var csvUrl = "https://docs.google.com/spreadsheets/d/1kmwcFrbbZuHxIbjc8Ow13_ANCS1Vib85fgD_pgy6cUQ/export?format=csv";
 
-
 var columna = 1;
 var cantidadColumnas = 1;
 
 //Número más cercano, retorna índice del array
 const closestIndex = (num, arr) => {
-  let curr = arr[0],
-    diff = Math.abs(num - curr);
-  let index = 0;
-  for (let val = 0; val < arr.length; val++) {
-    let newdiff = Math.abs(num - arr[val]);
-    if (newdiff < diff) {
-      diff = newdiff;
-      curr = arr[val];
-      index = val;
-    };
-  };
+  let index = arr.reduce((closestIndex, currentVal, currentIndex) => {
+      const currentDiff = Math.abs(num - currentVal);
+      const closestDiff = Math.abs(num - arr[closestIndex]);
+      return (currentDiff < closestDiff) ? currentIndex : closestIndex;
+  }, 0);
   return index;
 };
 
@@ -48,17 +41,13 @@ function loadDates() {
         columna = ci;
       };
 
-
-
     }).catch(error => {
       console.error("Error al cargar el archivo CSV:", error);
     });
-
 }
 
 // Función para cargar los datos desde Google Sheets
 function loadCsvData() {
-  
   //Buscar tabla y limpiarla
   var table = document.getElementById("csvTable");
   table.innerHTML = "";
