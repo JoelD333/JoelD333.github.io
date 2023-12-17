@@ -39,7 +39,7 @@ Posibles cambios del proyecto:
             //Menos comentarios, mas nombre descriptivos
             //Menos repeticion funciones, variables locales
             
-            //Posibles cambios (no los prove)
+            //Posibles cambios (no los probe)
             const baseSheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?single=true&widget=false&headers=false&chrome=false";
 
             const dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";

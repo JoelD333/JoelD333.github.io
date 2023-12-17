@@ -1,10 +1,23 @@
 // URL de la API de Google Sheets
 
+const baseSheetUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid={sheetId}`
+
+const sheet = [
+  "284054636",
+  "2036176846",
+  "321154631",
+  "0",
+  "1184309177"
+];
+
 var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=284054636&single=true&widget=false&headers=false&chrome=false";
 var hoja2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=2036176846&single=true&widget=false&headers=false&chrome=false";
 var hoja3Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=321154631&single=true&widget=false&headers=false&chrome=false";
 var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=0&single=true&widget=false&headers=false&chrome=false";
 var hoja5Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=1184309177&single=true&widget=false&headers=false&chrome=false";
+
+
+console.log(hoja1Url);
 
 var dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
 
@@ -15,17 +28,11 @@ var hojaActual = 0;
 
 //Número más cercano, retorna índice del array
 const closestIndex = (num, arr) => {
-  let curr = arr[0],
-    diff = Math.abs(num - curr);
-  let index = 0;
-  for (let val = 0; val < arr.length; val++) {
-    let newdiff = Math.abs(num - arr[val]);
-    if (newdiff < diff) {
-      diff = newdiff;
-      curr = arr[val];
-      index = val;
-    };
-  };
+  let index = arr.reduce((closestIndex, currentVal, currentIndex) => {
+      const currentDiff = Math.abs(num - currentVal);
+      const closestDiff = Math.abs(num - arr[closestIndex]);
+      return (currentDiff < closestDiff) ? currentIndex : closestIndex;
+  }, 0);
   return index;
 };
 
@@ -39,10 +46,8 @@ function dateManager() {
 
       for (var i = 1; i < 5; i++) {
         var cells = rows[i].split(',');
-        fechas.push(cells[0]);
+        fechas.push(cells[0]); 
       }
-
-      console.log(fechas);
       
       //Buscar la fecha mas cercana a la actual
       var date = new Date().getDate();
@@ -54,17 +59,13 @@ function dateManager() {
         hojaActual = ci;
       };
       
-     
-
       iframeManager();
     }).catch(error => {
       console.error("Error al cargar el archivo CSV:", error);
     });
-
 }
 
 function iframeManager() {
-  
   var loader = document.getElementById("loader");
   loader.style.display = 'initial';
   
@@ -73,27 +74,17 @@ function iframeManager() {
    iframe.scrolling = 'no';
  
  loader.style.display = 'none';
- 
  };
 
-// Carga los datos al cargar la página
+ //Usar DOMContentLoader
 window.addEventListener("load", dateManager);
 
-
 function hojaPlus() {
-  if (hojaActual >= 4) {
-    hojaActual = 0;
-  } else {
-    hojaActual++;
-  }
+  hojaActual < 4 ? hojaActual++ : hojaActual = 0;
   iframeManager();
 };
 
 function hojaMinus() {
-  if (hojaActual <= 0) {
-    hojaActual = 4;
-  } else {
-    hojaActual--;
-  }
+  hojaActual > 0 ? hojaActual-- : hojaActual = 4;
   iframeManager();
 };

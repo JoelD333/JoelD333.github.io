@@ -1,31 +1,25 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="stylesheet" href="styles/grupos.css">
+        <script src="scripts/grupos.js"></script>
+        <title> Grupos </title>
+    </head>
+    <body>
+    
+        <div id="loader" class="loader"></div>
+        <div class="mainContainer">
+            <button><a href="index.html"> ◀ </a></button>
+            <iframe id="iframe"></iframe>
+        </div>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="/manifest.json">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles/grupos.css">
-    <script src="scripts/grupos.js"></script>
-    <title> Grupos </title>
-</head>
+        <div class="container">
+            <button onclick="hojaMinus()">◀</button> 
+            <button onclick="hojaPlus()">▶</button>
+        </div>
 
-<body>
-  
-    <div id="loader" class="loader"></div>
-    <div class="mainContainer">
-        <button><a href="index.html"> ◀ </a></button>
-        <iframe id="iframe"></iframe>
-
-    </div>
-
-    <div class="container">
-                <button onclick="hojaMinus()">◀</button>
-              
-                <button onclick="hojaPlus()">▶</button>
-    </div>
-
-</body>
-
-
+    </body>
 </html>

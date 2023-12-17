@@ -10,7 +10,6 @@
 }
 
 .mainContainer {
-
   text-align: center;
   display: flex;
   align-items: center;
@@ -28,10 +27,9 @@ iframe {
   width: 99%;
   height: 95%;
   overflow: hidden;
-  
-  }
-button {
+}
 
+button {
   background-color: #52B8D1;
   border: none;
   font-size: 16px;
@@ -58,8 +56,6 @@ a {
   height: 2pc;
   line-height: 2pc;
 }
-
-
 
 td {
   width: 136px;
