@@ -1,14 +1,15 @@
-id,Nombre
-0,Presidencia
-1,Discurso Tesoros
-2,Busquemos Perlas
-3,Lectura Biblica
-4,1ra Conversacion
-5,Revisita
-6,Curso Biblico
-7,Discurso Maestros
-8,Necesidades de la Congre
-9,Analisis Vida Cristiana
-10,Estudio Congregacion
-11,Lectura Estudio Congregacion
-12,Oracion Final
+id,Nombre,
+0,Presidencia,
+1,Discurso Tesoros,
+2,Busquemos Perlas,
+3,Lectura Biblica,
+4,1ra Conversacion,
+5,Revisita,
+6,Curso Biblico,
+7,Discurso Maestros,
+8,Necesidades de la Congre,
+9,Analisis Vida Cristiana,
+10,Estudio Congregacion,
+11,Lectura Estudio Congregacion,
+12,Oracion Final,
+,,
