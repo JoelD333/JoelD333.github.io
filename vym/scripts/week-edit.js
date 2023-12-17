@@ -1,21 +1,27 @@
 var weekDoc = "";
 
-function highlightDuplicated(textAsignacion) {
+function highlightDuplicated() {
 
   const texts = document.querySelectorAll(".strong-asignado")
 
   texts.forEach(text => {
 
-    if (text == textAsignacion) {
-      return;
-    }
-
     text.classList.remove('duplicated');
 
 
-    if (text.textContent == textAsignacion.textContent) {     
-      textAsignacion.classList.add("duplicated");
-    }
+    texts.forEach(text2 => {
+
+      if (text != text2 && text.textContent != "ASIGNAR"){
+        if (text.textContent == text2.textContent) {     
+          text.classList.add("duplicated");
+        }
+      }
+
+    })
+
+
+
+    
 
   })
 }
@@ -557,7 +563,7 @@ function showTable(data, textAsignacion, nombr, sex) {
     textAsignacion.id = selectedRow.id;
 
     showHideSelector();
-    highlightDuplicated(textAsignacion);
+    highlightDuplicated();
   })
 
 }
