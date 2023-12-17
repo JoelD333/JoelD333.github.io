@@ -506,7 +506,7 @@ function sort(csvArray, ascending = true) {
 //CSV TO ARRAY
 function parseToArray(csvString) {
   //Split the array into rows, then split these rows into cells
-  return csvString.split('\r\n').map(row => {
+  return csvString.split('\n').map(row => {
     return row.split(',')
   })
 }
