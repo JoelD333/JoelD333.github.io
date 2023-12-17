@@ -1,4 +1,5 @@
 var weekDoc = "";
+var arrayAssignements = [];
 
 function highlightDuplicated() {
 
@@ -11,8 +12,8 @@ function highlightDuplicated() {
 
     texts.forEach(text2 => {
 
-      if (text != text2 && text.textContent != "ASIGNAR"){
-        if (text.textContent == text2.textContent) {     
+      if (text != text2 && text.textContent != "ASIGNAR") {
+        if (text.textContent == text2.textContent) {
           text.classList.add("duplicated");
         }
       }
@@ -21,7 +22,7 @@ function highlightDuplicated() {
 
 
 
-    
+
 
   })
 }
@@ -34,20 +35,25 @@ function saveDates() {
   var data = parseToArray(csv, true)
 
   const week = document.querySelector("#weekSelector")
-  const assignments = document.querySelectorAll(".strong-asignado")
-  const ids = []
+ 
 
-  assignments.forEach(assignment => {
-      console.log(assignment.id);
-      ids.push(assignment.id)
-  });
+  fetch("./Files/AssigmentsDB.csv")
+  .then(response => response.text())
+  .then(assCsv => {
+    const assignementsData = parseToArray(assCsv)
 
-
-  ids.forEach(id => {
-    data.filter(row => row[0] == id)[0][5] = getDateOfWeek(week.value)
+    arrayAssignements.forEach(assignment => {    
+      student = data.find(row => row[0] == assignment[0])
+      //Guardar Fecha
+      student[5] = getDateOfWeek(week.value)
+      // Guardar Parte
+      student[6] = assignementsData.find(e => e[0] == assignment[1])[1]
+    })
+  
+    createAndSaveCSV(data);  
+  
   })
-
-  createAndSaveCSV(data);
+  
 
 }
 
@@ -104,7 +110,17 @@ function savePDF() {
     jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
   };
 
-  window.html2pdf().set(opt).from(element).toImg().save();
+  //Crear y Guardar Imagen!
+  window.html2pdf().set(opt).from(element).toImg().outputImg().then(img=>{
+    var hiddenElement = document.createElement('a');
+
+     hiddenElement.href = img.src;
+     hiddenElement.target = '_blank';
+     hiddenElement.download = 'myFile.jpeg';
+     hiddenElement.click();
+  })
+
+  
 }
 
 //Cargar datos de la semana
@@ -170,13 +186,16 @@ function loadWeek(week) {
         cellAssignment.appendChild(h3)
 
 
+        const assignedButton1 = document.createElement("button")
+        const assignedButton2 = document.createElement("button")
+        const assignedText1 = document.createElement("strong")
+        const assignedText2 = document.createElement("strong")
+
+        
 
         // Si la parte es 1era Conversasion, Revisita o Estudio
         if (partTitle.textContent.includes("Empiece conversaciones") || partTitle.textContent.includes("Haga revisitas") || partTitle.textContent.includes("Haga discípulos")) {
-          const assignedButton1 = document.createElement("button")
-          const assignedButton2 = document.createElement("button")
-          const assignedText1 = document.createElement("strong")
-          const assignedText2 = document.createElement("strong")
+       
 
 
           //Asignado 1
@@ -185,7 +204,7 @@ function loadWeek(week) {
           assignedText1.classList.add("strong-asignado")
           assignedText1.classList.add("staging-text")
 
-          assignedButton1.id = maestrosCount + "-0"
+        
           assignedButton1.textContent = "✎"
           assignedButton1.type = "button"
           assignedButton1.classList.add("staging-button")
@@ -196,13 +215,27 @@ function loadWeek(week) {
           assignedText2.classList.add("strong-asignado")
           assignedText2.classList.add("staging-text")
 
-          assignedButton2.id = maestrosCount + "-1"
+          
           assignedButton2.textContent = "✎"
           assignedButton2.type = "button"
           assignedButton2.classList.add("staging-button")
           assignedButton2.classList.add("select-button")
 
 
+
+          if(partTitle.textContent.includes("Empiece conversaciones")){
+            assignedButton1.id = "4"
+            assignedButton2.id = "4"
+          }
+          if(partTitle.textContent.includes("Haga revisitas")){
+            assignedButton1.id = "5"
+            assignedButton2.id = "5"
+          }
+          if(partTitle.textContent.includes("Haga discípulos")){
+            assignedButton1.id = "6"
+            assignedButton2.id = "6"
+          }
+          
 
           //Append
           cellAssigned1.append(assignedText1)
@@ -211,11 +244,7 @@ function loadWeek(week) {
           cellAssigned2.append(assignedText2)
           cellAssigned2.append(assignedButton2)
 
-        } else {
-          const assignedButton1 = document.createElement("button")
-          const assignedText1 = document.createElement("strong")
-
-
+        } else {        
           assignedText1.id = maestrosCount + "-0"
           assignedText1.textContent = "ASIGNAR"
           assignedText1.classList.add("strong-asignado")
@@ -363,19 +392,19 @@ function loadDB() {
 
   //Llenar Presidentes
 
-  buttonPresidente.addEventListener("click", function () { showTable(data, textPresidente, 3) })
+  buttonPresidente.addEventListener("click", function () { showTable(data, textPresidente, 3, 0) })
 
   //Llenar Discurso Tesoros
 
-  buttonTesoros.addEventListener("click", function () { showTable(data, textTesoros, 2) })
+  buttonTesoros.addEventListener("click", function () { showTable(data, textTesoros, 2, 1) })
 
   //Llenar Perlas
 
-  buttonPerlas.addEventListener("click", function () { showTable(data, textPerlas, 2) })
+  buttonPerlas.addEventListener("click", function () { showTable(data, textPerlas, 2, 2) })
 
   //Llenar Lectura
 
-  buttonLectura.addEventListener("click", function () { showTable(data, textLectura, 0, "M") })
+  buttonLectura.addEventListener("click", function () { showTable(data, textLectura, 0, 3, "M") })
 
 
 
@@ -391,13 +420,15 @@ function loadDB() {
 
   for (let index = 0; index < maestrosStagingButtonList.length; index++) {
 
-    maestrosStagingButtonList[index].addEventListener("click", function () { showTable(data, maestrosStagingTextList[index], 0) })
+    let button = maestrosStagingButtonList[index];
+    let stagingPart = button.id;
+    button.addEventListener("click", function () { showTable(data, maestrosStagingTextList[index], 0, stagingPart) })
 
   }
 
   for (let index = 0; index < maestrosSpeechButtonList.length; index++) {
 
-    maestrosSpeechButtonList[index].addEventListener("click", function () { showTable(data, maestrosSpeechTextList[index], 1, "M") })
+    maestrosSpeechButtonList[index].addEventListener("click", function () { showTable(data, maestrosSpeechTextList[index], 1, 7, "M") })
 
   }
 
@@ -418,21 +449,21 @@ function loadDB() {
 
   //Llenar partes de Vida excepto Estudio
   for (let index = 0; index < vidaButtons.length; index++) {
-    vidaButtons[index].addEventListener("click", function () { showTable(data, vidaTexts[index], 2) })
+    vidaButtons[index].addEventListener("click", function () { showTable(data, vidaTexts[index], 2, 9) })
   }
 
   //Llenar Estudio biblico
 
   //Llenar Conductor
-  estudioButton.addEventListener("click", function () { showTable(data, estudioText, 3) })
+  estudioButton.addEventListener("click", function () { showTable(data, estudioText, 3, 10) })
 
   //Llenar Lector
-  estudioLecturaButton.addEventListener("click", function () { showTable(data, estudioLecturaText, 2) })
+  estudioLecturaButton.addEventListener("click", function () { showTable(data, estudioLecturaText, 2, 11) })
 
 
   //Llenar Oracion Final
 
-  oracionFinalButton.addEventListener("click", function () { showTable(data, oracionFinalText, 1, "M") })
+  oracionFinalButton.addEventListener("click", function () { showTable(data, oracionFinalText, 1, 12, "M") })
 
 
 }
@@ -499,72 +530,96 @@ function weekInputHandler() {
 }
 
 
+
 //Muestra la tabla y la llena con los hermanos disponibles para la asignacion
-function showTable(data, textAsignacion, nombr, sex) {
+function showTable(data, textAsignacion, nombr, part, sex) {
 
-  showHideSelector();
+  //Fetch AssigmentsDB
+  fetch("./Files/AssigmentsDB.csv")
+    .then(response => response.text())
+    .then(assCsv => {
 
-  const table = document.querySelector("#dataTable")
-  table.innerHTML = ""
+      const assignementsData = parseToArray(assCsv)
 
-  data.filter(e => Number(e[4]) >= nombr && e[3] != sex).forEach(row => {
+      //Buscar Tabla
+      const table = document.querySelector("#dataTable")
+      table.innerHTML = ""
 
-    const newRow = table.insertRow();
-    newRow.id = row[0]
-    newRow.style.cursor = "pointer"
-    newRow.addEventListener("click", function () { selectRow(newRow) })
+      const titulo = document.querySelector("#strongAsignacion")
+      titulo.textContent = assignementsData.find(e => e[0] == part)[1];
 
-    
+      //Mostrar el Dialog
+      showHideSelector();
 
-    //Llenar tabla con los asignados posibles
-    for (i = 1; i < row.length; i++) {
+      //Llenar Tabla
+      data.filter(e => Number(e[4]) >= nombr && e[3] != sex).forEach(row => {
+
+        const newRow = table.insertRow();
+        newRow.id = row[0]
+        newRow.style.cursor = "pointer"
+        newRow.addEventListener("click", function () { selectRow(newRow) })
+
+        //Llenar tabla con los asignados posibles
+        for (i = 1; i < row.length; i++) {
 
 
-      switch (i) {
+          switch (i) {
 
-        case 4:
-          continue;
-          break;
-        //Caso Columna sexo (3)
-        case 3: {
+            //Omitir columna 4 Nombramiento
+            case 4:
+              continue;
+              break;
 
-          const newCell = newRow.insertCell();
-          newCell.textContent = sexIcon(row[i])
 
-          break;
+            //Caso Columna sexo (3)
+            case 3: {
+
+              const newCell = newRow.insertCell();
+              newCell.textContent = sexIcon(row[i])
+              break;
+            }
+
+            //Caso Columna Fecha Ultima Parte
+            case 5:{
+              const newCell = newRow.insertCell();
+              const date = formatDate(row[i]);
+              date ==  "undefined/undefined/" ? newCell.textContent = "Sin Datos" : newCell.textContent = date                            
+              break;
+            }
+
+            //Caso default
+            default: {
+              const newCell = newRow.insertCell();
+              newCell.textContent = row[i];
+
+              break;
+            }
+
+          }
         }
 
-        //Caso default
-        default: {
-          const newCell = newRow.insertCell();
-          newCell.textContent = row[i];
+      })
 
-          break;
-        }
+      //Click Listener y funcion para elegir  
 
-      }
-    }
+      //Remplazar boton por el mismo, lo que quita los listeners
+      const assignButton = document.querySelector("#assignButton");
+      assignButton.replaceWith(assignButton.cloneNode(true));
 
-  })
+      //Agregar lsitener al boton
+      document.querySelector("#assignButton").addEventListener("click", function () {
 
-  //Click Listener y funcion para elegir  
+        const selectedRow = document.querySelector(".row-selected")
+        const selectedRowCells = selectedRow.children
 
-  //Remplazar boton por el mismo, lo que quita los listeners
-  const assignButton = document.querySelector("#assignButton");
-  assignButton.replaceWith(assignButton.cloneNode(true));
+        textAsignacion.textContent = selectedRowCells[0].textContent + ' ' + selectedRowCells[1].textContent        
 
-  //Agregar lsitener al boton
-  document.querySelector("#assignButton").addEventListener("click", function () {
+        arrayAssignements.push([selectedRow.id, part])
 
-    const selectedRow = document.querySelector(".row-selected")
-    const selectedRowCells = selectedRow.children
-
-    textAsignacion.textContent = selectedRowCells[0].textContent + ' ' + selectedRowCells[1].textContent     
-    textAsignacion.id = selectedRow.id;
-
-    showHideSelector();
-    highlightDuplicated();
-  })
+        showHideSelector();
+        highlightDuplicated();
+      })
+    })
 
 }
 

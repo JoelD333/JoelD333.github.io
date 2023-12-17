@@ -1,16 +1,17 @@
-var data = []
+
 var fileSaved = false
 
 function loadData() {
 
     const csv = sessionStorage.getItem("db")
 
-    data = parseToArray(csv)
+    data = parseToArray(csv).filter(e => e[0] != "id" && e[0] != "")
 
     table = document.querySelector("#dataTable")
     table.innerHTML = ""
 
-    for (let rowIdx = 1; rowIdx < data.length - 1; rowIdx++) {
+
+    for (let rowIdx = 0; rowIdx < data.length; rowIdx++) {
         const tableRow = table.insertRow();
         const row = data[rowIdx];
 
@@ -25,7 +26,7 @@ function loadData() {
 
                 //Caso Columna id (0)
                 //Agregar boton de eliminar y modificar!!
-                case 0:
+                case 0: {
                     const deleteButton = document.createElement("button")
                     deleteButton.classList.add("edit-button")
                     deleteButton.textContent = '🗙'
@@ -44,9 +45,9 @@ function loadData() {
 
 
 
-
+                }
                 //Caso Columna sexo (3)
-                case 3:
+                case 3: {
                     switch (row[i]) {
                         case "H":
                             tableCell.innerHTML = "🚹";
@@ -58,10 +59,10 @@ function loadData() {
                     }
                     tableRow.insertBefore(tableCell, tableRow.lastChild)
                     break;
-
+                }
 
                 //Caso Columna nombramiento (4)
-                case 4:
+                case 4: {
 
                     switch (row[i]) {
                         case "0":
@@ -80,6 +81,18 @@ function loadData() {
                     }
                     tableRow.insertBefore(tableCell, tableRow.lastChild)
                     break;
+                }
+
+                //Caso Columna Fecha (5)
+                case 5: {
+                    const date = formatDate(row[i]);
+
+                    date ==  "undefined/undefined/" ? tableCell.innerHTML = "Sin Datos" : tableCell.innerHTML = date
+                  
+
+                    tableRow.insertBefore(tableCell, tableRow.lastChild)
+                    break;
+                }
 
 
                 //Caso default
@@ -125,11 +138,19 @@ function deleteStudent(id) {
 
 }
 
+//Cambiar formato de Fecha yyyy-mm-dd to dd/mm/yyyy
+function formatDate(date) {
+
+    const d = date.split("-")
+    const orderedDate = d[2] + "/" + d[1] + "/" + d[0]
+
+    return orderedDate;
+}
 
 //Funcion para guardar los datos editados
 function saveButton() {
-
     //Agregar funcion al boton de guardar   
+
     download_txt(sessionStorage.getItem("db"));
     fileSaved = true;
     swal("Guardado!", "Se guardo el archivo", "success");
@@ -153,12 +174,17 @@ function addStudent() {
     const name = form.querySelector('#inputName');
     const lastName = form.querySelector('#inputLastName');
 
-    const newStudent = [getNewId(), name.value, lastName.value, sex.value, nombr.value, ""];
-    const csvEndline = ["", "", "", "", "", ""];
+    const newStudent = [getNewId(), name.value, lastName.value, sex.value, nombr.value, "", ""];
+    const csvEndline = ["", "", "", "", "", "", ""];
+    const csvHeader = ["id", "nombre", "apellido", "sexo", "nombramiento", "ultimaFecha", "ultimaParte"]
 
-    data.pop();
+    const csv = sessionStorage.getItem("db")
+    var data = parseToArray(csv).filter(e => e[0] != "id" && e[0] != "")
+
+
     data.push(newStudent);
-    data.push(csvEndline)
+    data.push(csvEndline);
+    data.unshift(csvHeader);
     createAndSaveCSV(data);
     fileSaved = false;
 }
@@ -178,10 +204,10 @@ function saveStudent() {
     data[id][2] = lastName.value;
     data[id][3] = sex.value;
     data[id][4] = nombr.value;
-   
-    
+
+
     document.querySelector("#editDialog").style.display = 'none';
-    
+
     createAndSaveCSV(data);
     fileSaved = false;
 }
@@ -189,7 +215,23 @@ function saveStudent() {
 //Busca ultima Id del Array y Retorna LastID++
 function getNewId() {
 
-    const lastId = Number(data[data.length - 2][0])
+    const csv = sessionStorage.getItem("db")
+
+    var actual = parseToArray(csv).filter(e => e[0] != "id" && e[0] != "")
+
+    //Ordenar segun columna
+    var sortedData = actual.sort(function (a, b) {
+
+        if (a[0] < b[0]) {
+            return -1;
+        }
+        if (a[0] < b[0]) {
+            return 1;
+        }
+        return 0;
+    });
+
+    const lastId = Number(sortedData.length)
     return (lastId + 1).toString();
 
 }
@@ -268,8 +310,6 @@ function tableFilter(inputValue) {
         }
 
     }
-
-    sortTable(2);
 }
 
 //Ordenar tabla
@@ -277,13 +317,11 @@ function sortTable(column, th) {
 
     const csv = sessionStorage.getItem("db")
 
-    const actual = parseToArray(csv)
-
-
+    var actual = parseToArray(csv)
+    actual = actual.filter(e => e[0] != "id" && e[0] != "")
 
     //Ordenar segun columna
     var sortedData = actual.sort(function (a, b) {
-
 
         if (a[column] < b[column]) {
             return -1;
@@ -294,13 +332,6 @@ function sortTable(column, th) {
         return 0;
     });
 
-    //Reiniciar Headers
-
-    const headers = document.querySelectorAll("th")
-
-    headers.forEach(header => {
-        header.innerText = header.dataset.ot;
-    });
 
     //Chequear si ya estaba ordenado asi e invertir el orden si es asi 
     //Agregar flechita que indica direccion
@@ -310,6 +341,22 @@ function sortTable(column, th) {
     } else {
         th.innerText = th.dataset.ot.slice(0, -1) + "▴"
     }
+
+    const csvHeader = ["id", "nombre", "apellido", "sexo", "nombramiento", "ultimaFecha", "ultimaParte"]
+    const csvEndLine = ["", "", "", "", "", "", ""]
+
+    sortedData.unshift(csvHeader)
+    sortedData.push(csvEndLine)
+
+    //Reiniciar Headers
+
+    const headers = document.querySelectorAll("th")
+
+    headers.forEach(header => {
+        header.innerText = header.dataset.ot;
+    });
+
+
 
 
 
