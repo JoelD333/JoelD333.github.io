@@ -1,7 +1,5 @@
 var data = []
 var fileSaved = false
-var editedIndex = -1
-
 
 function loadData() {
 
@@ -25,8 +23,8 @@ function loadData() {
 
             switch (i) {
 
-                //Caso Columna id (3)
-                //Agregar boton de eliminar!!
+                //Caso Columna id (0)
+                //Agregar boton de eliminar y modificar!!
                 case 0:
                     const deleteButton = document.createElement("button")
                     deleteButton.classList.add("edit-button")
@@ -169,19 +167,17 @@ function addStudent() {
 //Toma los datos del forulario y los agrega al dataFile, luego los guarda y recarga la tabla.
 function saveStudent() {
 
-    console.log("here");
-
     const form = document.querySelector("#editForm");
     const nombr = form.querySelector('input[name="nombr"]:checked');
     const sex = form.querySelector('input[name="sex"]:checked');
     const name = form.querySelector('#inputName');
     const lastName = form.querySelector('#inputLastName');
+    const id = form.querySelector('#textId').textContent.slice(22);
 
-
-    data[editedIndex][1] = name.value;
-    data[editedIndex][2] = lastName.value;
-    data[editedIndex][3] = sex.value;
-    data[editedIndex][4] = nombr.value;
+    data[id][1] = name.value;
+    data[id][2] = lastName.value;
+    data[id][3] = sex.value;
+    data[id][4] = nombr.value;
    
     
     document.querySelector("#editDialog").style.display = 'none';
@@ -325,7 +321,7 @@ function sortTable(column, th) {
 function editStudent(id) {
 
 
-    editedIndex = data.findIndex(e => e[0] == id);
+    const editedIndex = data.findIndex(e => e[0] == id);
     const student = data[editedIndex];
 
     const editDialog = document.querySelector("#editDialog");
@@ -339,7 +335,10 @@ function editStudent(id) {
     const lastName = editDialog.querySelector("#inputLastName");
     const nombr = editDialog.querySelectorAll('input[name="nombr"]');
     const sex = editDialog.querySelectorAll('input[name="sex"]');
+    const idText = editDialog.querySelector('#textId');
 
+
+    idText.textContent = "Editar Estudiante ID: " + id
     name.value = student[1];
     lastName.value = student[2];
 

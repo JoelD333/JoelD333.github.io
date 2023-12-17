@@ -3,10 +3,12 @@
 <html>
 
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="icon" type="image/x-icon" href="./Files/favicon.ico"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
+        integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="icon" type="image/x-icon" href="./Files/favicon.ico" />
     <script src="./scripts/week-edit.js"></script>
-    <link rel="stylesheet" href="./styles/week-edit.css"/>
+    <link rel="stylesheet" href="./styles/week-edit.css" />
 </head>
 
 <body>
@@ -14,81 +16,177 @@
     <div>
         <!-- Control y seleccion de Semana-->
         <label for="week">Seleccionar Semana:</label>
-     
+
         <input type="week" id="weekSelector" min="2024-W01">
 
     </div>
-    <form id="mainForm" >
-    <div id="mainDiv" >
-        <!-- Inicio de Formulario-->
-        
-        <h1 id="semana"> SEMANA</h1>
-        <h2 id="lecturaSemana" class="lecturaSemana"> LECTURA</h2>
-        <hr>
-        <h3><strong id="presidencia">Canción y oración | Palabras de introducción (1 min.) </strong>
-            <select required label="Presidente" id="asignadoPresidencia">
-                <option> </option>
-            </select>
-        </h3>
+    <form id="mainForm">
+        <div id="mainDiv">
 
-        <!-- TESOROS DE LA BIBLIA -->
-        <h2 class="tesoros"><img src="./Files/Icons/Treasures.png" style="width: 35px; margin-right: 10px;">
-            <strong>TESOROS DE LA BIBLIA </strong>
-        </h2>
 
-        <ul id="tesorosList">
-            <li>
-                <h3 class="tesoros"><strong id="discursoTesoros"> 1. DISCURSO </strong></strong> <select required 
-                        id="asignadoDiscursoTesoros"></select></h3>
-            </li>
-            <li></li>
-            <h3 class="tesoros"><strong> 2. Busquemos perlas escondidas </strong></strong> <select required
-                    id="asignadoPerlas"></select></h3>
-            </li>
-            <li></li>
-            <h3 class="tesoros"><strong> 3. Lectura de la Biblia </strong></strong> <select required
-                    id="asignadoLectura"></select>
-            </h3>
-            </li>
+            <!-- Inicio de Formulario-->
 
-        </ul>
+            <h1 id="semana"> SEMANA</h1>
+            <h2 id="lecturaSemana" class="lecturaSemana"> LECTURA</h2>
+            <hr>
 
-        <!-- SEAMOS MEJORES MAESTROS -->
 
-        <h2 class="maestros"><img src="./Files/Icons/Masters.png" style="width: 35px; margin-right: 10px;">
-            <strong>SEAMOS MEJORES MAESTROS</strong>
-        </h2>
-        <hr>
-        <ul id="maestrosList">
+            <!-- TABLA -->
+            <table class="assignments-table">
+                <!-- PRESIDENTE -->
+                <tr>
+                    <td>
+                        <h3>
+                            <strong id="presidencia">Canción y oración | Palabras de introducción (1 min.) </strong>
 
-        </ul>
+                        </h3>
+                    </td>
+                    <td>
+                        <Strong id="asignadoPresidencia" class="strong-asignado">ASIGNAR</Strong>
+                        <button type="button" class="select-button" id="asignadoPresidenciaButton">✎</button>
+                    </td>
+                </tr>
 
-        <!-- NUESTRA VIDA CRISTIANA -->
+                <!-- TESOROS DE LA BIBLIA -->
+                <tr>
+                    <td>
+                        <h2 class="tesoros">
+                            <img src="./Files/Icons/Treasures.png"
+                                style="object-fit: scale-down; width: 35px; margin-right: 10px;">
+                            <strong>TESOROS DE LA BIBLIA </strong>
+                        </h2>
+                    </td>
+                </tr>
+                <td>
+                    <h3 class="tesoros">
+                        <strong id="discursoTesoros"> 1. DISCURSO </strong>
 
-        <h2 class="vida"><img src="./Files/Icons/Living.png" style="width: 35px; margin-right: 10px;"> <strong>NUESTRA
-                VIDA CRISTIANA</strong></h2>
-        <hr>
-        <h3><strong id=cancionMedio> Cancion </strong></h3>
-        <ul id="vidaList">
+                    </h3>
+                </td>
+                <td>
+                    <strong id="asignadoDiscursoTesoros" class="strong-asignado">ASIGNAR</strong>
+                    <button type="button" class="select-button" id="asignadoDiscursoTesorosButton">✎</button>
+                </td>
 
-        </ul>
+                <tr>
+                    <td>
+                        <h3 class="tesoros">
+                            <strong> 2. Busquemos perlas escondidas </strong>
 
-        <hr>
+                        </h3>
+                    </td>
+                    <td>
+                        <strong id="asignadoPerlas" class="strong-asignado">ASIGNAR</strong>
+                        <button type="button" class="select-button" id="asignadoPerlasButton">✎</button>
+                    </td>
 
-        <h3><strong id="cancionFinal">Palabras de conclusión (3 mins.) | Canción 67 y oración </strong><select 
-                id="asignadoOracionFinal" required>
-                <option></option>
-            </select></h3>
-    </div>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="tesoros">
+                            <strong> 3. Lectura de la Biblia </strong>
+                        </h3>
+                    </td>
+                    <td>
+                        <strong id="asignadoLectura" class="strong-asignado">ASIGNAR</strong>
+                        <button type="button" class="select-button" id="asignadoLecturaButton">✎</button>
+                    </td>
+                </tr>
 
-    
-    <button id="saveButton" type="submit" >Guardar 🖫</button>
-</form>
+
+
+
+            </table>
+
+
+            <!-- SEAMOS MEJORES MAESTROS -->
+            <h2 class="maestros"><img src="./Files/Icons/Masters.png"
+                    style="object-fit: scale-down; width: 35px; margin-right: 10px;">
+                <strong>SEAMOS MEJORES MAESTROS</strong>
+            </h2>
+            <hr>
+            <table id="maestrosTable" class="assignments-table">
+
+            </table>
+
+            <!-- NUESTRA VIDA CRISTIANA -->
+
+            <h2 class="vida"><img src="./Files/Icons/Living.png"
+                    style="object-fit: scale-down; width: 35px; margin-right: 10px;">
+                <strong>NUESTRA VIDA CRISTIANA</strong>
+            </h2>
+            <hr>
+            <h3><strong id=cancionMedio> Cancion </strong></h3>
+
+
+
+            <table id="vidaTable" class="assignments-table">
+
+            </table>
+
+
+            <table class="assignments-table">
+                <tr>
+                    <td>
+                        <h3>
+                            <strong id="cancionFinal">Palabras de conclusión (3 mins.) | Canción 67 y oración </strong>
+                        </h3>
+                    </td>
+                    <td>
+                        <Strong id="asignadoOracionFinalText" class="strong-asignado">ASIGNAR</Strong>
+                        <button type="button" class="select-button" id="asignadoOracionFinalButton">✎</button>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+        <button id="saveButton" class="blue-button" type="submit">Guardar 🖫</button>
+    </form>
 
     <div>
     </div>
 
 
+    <!--  -->
+    <!-- TABLA PARA SELECCIONAR ASIGNADO -->
+    <!--  -->
+    <div id="selectFormDiv" class="select-form-div">
+        <div class="empty-div" id="emptyDiv" onclick="showHideSelector()"></div>
+        <div class="select-form">
+            <strong> Asignacion </strong>
+            <br>
+            <table class="select-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(1, this)" data-ot="Nombre⠀">
+                            Nombre⠀
+                        </th>
+
+                        <th onclick="sortTable(2, this)" data-ot="Apellido  ">
+                            Apellido⠀
+                        </th>
+
+                        <th onclick="sortTable(3, this)" data-ot="&#9893;⠀">
+                            &#9893;⠀
+                        </th>
+
+                        <th colspan="2" onclick="sortTable(5, this)" data-ot="Ultima Parte⠀">
+                            Ultima Parte⠀
+                        </th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="dataTable">
+
+                </tbody>
+            </table>
+            <br>
+            <div>
+                <button class="blue-button" id="assignButton">Aceptar</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 

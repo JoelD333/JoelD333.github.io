@@ -1,41 +1,24 @@
 var weekDoc = "";
 
+function highlightDuplicated(textAsignacion) {
+
+  const texts = document.querySelectorAll(".strong-asignado")
+
+  texts.forEach(text => {
+
+    if (text == textAsignacion) {
+      return;
+    }
+
+    text.classList.remove('duplicated');
 
 
-function highlightDuplicated() {
-
-  const selects = document.querySelectorAll('select')
-
-
-
-  selects.forEach(select => {
-
-    select.addEventListener("change", function() {
-
-      select.classList.remove('duplicated');
-      const slctdIdx = select.selectedIndex
-
-      for (i = 0; i < selects.length; i++) {
-
-        const sel = selects[i];
-        if (selects[i] != select) {
-          if (select.options[slctdIdx].value == sel.options[sel.selectedIndex].value) {
-            select.classList.add('duplicated')
-          }
-        }
-
-      }
-
-
-
-    })
-
+    if (text.textContent == textAsignacion.textContent) {     
+      textAsignacion.classList.add("duplicated");
+    }
 
   })
 }
-
-
-
 
 // Guarada la fecha de la semana en el DataArray y lo guarda
 function saveDates() {
@@ -43,23 +26,14 @@ function saveDates() {
   const csv = sessionStorage.getItem("db")
 
   var data = parseToArray(csv, true)
-  console.log(data)
-
-
 
   const week = document.querySelector("#weekSelector")
-  const selects = document.querySelectorAll("select")
-
+  const assignments = document.querySelectorAll(".strong-asignado")
   const ids = []
 
-  selects.forEach(select => {
-
-    const selecetedOption = select.options[select.selectedIndex]
-    if (selecetedOption.value != "") {
-      ids.push(select.options[select.selectedIndex].id)
-    }
-
-
+  assignments.forEach(assignment => {
+      console.log(assignment.id);
+      ids.push(assignment.id)
   });
 
 
@@ -70,7 +44,6 @@ function saveDates() {
   createAndSaveCSV(data);
 
 }
-
 
 function getDateOfWeek(week) {
 
@@ -86,14 +59,12 @@ function getDateOfWeek(week) {
   return newDate;
 }
 
-
 //Transform Data Array to CSV
 function createAndSaveCSV(csvArray, fileName, rowDelimiter = '\r\n') {
 
   const csvString = csvArray.join(rowDelimiter);
   sessionStorage.setItem("db", csvString)
   download_txt(csvString);
-
 }
 
 //Guardar texto Como CSV
@@ -107,43 +78,36 @@ function download_txt(textToSave) {
 
 }
 
-
-
 function savePDF() {
 
-  //Remove dates
-
-  document.querySelectorAll("select").forEach(e => {
-
-
-    //  element.classList.add = "hide"
-    const selectedOption = e.options[e.selectedIndex]
-    const selectText = selectedOption.text;
-    e.classList.add("hide-border")
-
-    selectedOption.text = selectText.slice(2, -10)
+  document.querySelectorAll(".select-button").forEach(e => {
+    e.style.display = "none"
   });
 
 
-  // Choose the element that your content will be rendered to.
-  const element = document.getElementById('mainDiv');
+  // Elemento que se va a renderizar
+  const element = document.querySelector("#mainDiv");
   const week = document.getElementById("semana").textContent
-  // Choose the element and save the PDF for your user.
+
+  // Guardar PDF
   var opt = {
-    margin: 1,
+    margin: 0,
     filename: week,
-    image: { type: 'jpeg', quality: 1000 },
-    html2canvas: { scale: 1 },
-    jsPDF: { unit: 'in', format: 'a3', orientation: 'portrait' }
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: { scale: 10 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
   };
 
   window.html2pdf().set(opt).from(element).toImg().save();
 }
 
-
-
 //Cargar datos de la semana
 function loadWeek(week) {
+
+  document.querySelectorAll(".select-button").forEach(e => {
+    e.style.display = "inline-block"
+  });
+
 
   const url = "./Files/Weeks/" + week + ".html"
   fetch(url)
@@ -173,110 +137,187 @@ function loadWeek(week) {
       //Tesoros de la biblia
 
       document.querySelector("#discursoTesoros").textContent = weekDoc.querySelector("#p5").textContent
-      //Maestros
 
-      const maestrosList = document.querySelector("#maestrosList");
+
+      //Seamos Mejores Maestros
+
+      const maestrosTable = document.querySelector("#maestrosTable");
 
       const maestrosParts = weekDoc.querySelectorAll(".du-fontSize--base.du-color--gold-700.du-margin-top--8.du-margin-bottom--0")
       var maestrosCount = 0
 
-      maestrosList.innerHTML = ""
+      maestrosTable.innerHTML = ""
 
       maestrosParts.forEach(part => {
 
-        const li = document.createElement("li")
+        const partRow = maestrosTable.insertRow();
+        const cellAssignment = partRow.insertCell();
+        const cellAssigned1 = partRow.insertCell();
+        const cellAssigned2 = partRow.insertCell();
+
+
         const h3 = document.createElement("h3")
-
-        h3.textContent = part.textContent
         h3.classList.add("maestros")
-
-
-        if (h3.textContent.includes("Empiece conversaciones") || h3.textContent.includes("Haga revisitas") || h3.textContent.includes("Haga discípulos")) {
-          const selector1 = document.createElement("select")
-          const selector2 = document.createElement("select")
-
-
-          selector1.id = maestrosCount + "-0"
-          selector1.required = 'required'
-          selector1.classList.add("staging")
+        const partTitle = document.createElement("strong")
+        partTitle.textContent = part.textContent
+        h3.appendChild(partTitle)
+        cellAssignment.appendChild(h3)
 
 
 
-          selector2.id = maestrosCount + "-1"
-          selector2.required = 'required'
-          selector2.classList.add("staging")
+        // Si la parte es 1era Conversasion, Revisita o Estudio
+        if (partTitle.textContent.includes("Empiece conversaciones") || partTitle.textContent.includes("Haga revisitas") || partTitle.textContent.includes("Haga discípulos")) {
+          const assignedButton1 = document.createElement("button")
+          const assignedButton2 = document.createElement("button")
+          const assignedText1 = document.createElement("strong")
+          const assignedText2 = document.createElement("strong")
 
 
-          h3.append(selector1)
-          h3.append(selector2)
+          //Asignado 1
+          assignedText1.id = maestrosCount + "-0"
+          assignedText1.textContent = "ASIGNAR"
+          assignedText1.classList.add("strong-asignado")
+          assignedText1.classList.add("staging-text")
+
+          assignedButton1.id = maestrosCount + "-0"
+          assignedButton1.textContent = "✎"
+          assignedButton1.type = "button"
+          assignedButton1.classList.add("staging-button")
+          assignedButton1.classList.add("select-button")
+          //Asignado 2
+          assignedText2.id = maestrosCount + "-0"
+          assignedText2.textContent = "ASIGNAR"
+          assignedText2.classList.add("strong-asignado")
+          assignedText2.classList.add("staging-text")
+
+          assignedButton2.id = maestrosCount + "-1"
+          assignedButton2.textContent = "✎"
+          assignedButton2.type = "button"
+          assignedButton2.classList.add("staging-button")
+          assignedButton2.classList.add("select-button")
+
+
+
+          //Append
+          cellAssigned1.append(assignedText1)
+          cellAssigned1.append(assignedButton1)
+
+          cellAssigned2.append(assignedText2)
+          cellAssigned2.append(assignedButton2)
+
         } else {
-          const selector1 = document.createElement("select")
+          const assignedButton1 = document.createElement("button")
+          const assignedText1 = document.createElement("strong")
 
 
-          selector1.id = maestrosCount;
-          selector1.required = 'required';
-          selector1.classList.add("speech");
+          assignedText1.id = maestrosCount + "-0"
+          assignedText1.textContent = "ASIGNAR"
+          assignedText1.classList.add("strong-asignado")
+          assignedText1.classList.add("speech-text")
 
+          assignedButton1.id = maestrosCount + "-0"
+          assignedButton1.textContent = "✎"
+          assignedButton1.type = "button"
+          assignedButton1.classList.add("speech-button")
+          assignedButton1.classList.add("select-button")
 
-          h3.append(selector1)
+          cellAssigned1.append(assignedText1)
+          cellAssigned1.append(assignedButton1)
         }
 
-
-
-
-        li.append(h3)
-        maestrosList.append(li)
         maestrosCount++;
       });
 
-      //Vida
+      //Nuestra Vida Cristiana
 
-      const cancionMedio = document.querySelector("#cancionMedio").textContent = weekDoc.querySelectorAll(".du-fontSize--base.dc-icon--music.dc-icon-size--basePlus1.dc-icon-margin-horizontal--8")[1].textContent;
-      const vidaList = document.querySelector("#vidaList");
+      document.querySelector("#cancionMedio").textContent = weekDoc.querySelectorAll(".du-fontSize--base.dc-icon--music.dc-icon-size--basePlus1.dc-icon-margin-horizontal--8")[1].textContent;
+
+      const vidaTable = document.querySelector("#vidaTable");
 
       const vidaParts = weekDoc.querySelectorAll(".du-fontSize--base.du-color--maroon-600.du-margin-top--8.du-margin-bottom--0")
       var maestrosCount = 0
 
-      vidaList.innerHTML = ""
+      vidaTable.innerHTML = ""
+
+
 
       vidaParts.forEach(part => {
 
-        const li = document.createElement("li")
+        const partRow = vidaTable.insertRow()
+
+        const cellAssignment = partRow.insertCell();
+        const cellAssigned1 = partRow.insertCell();
+        const cellAssigned2 = partRow.insertCell();
+
+
         const h3 = document.createElement("h3")
-
-        const selector1 = document.createElement("select")
-
-
-        h3.textContent = part.textContent
         h3.classList.add("vida")
+        const partTitle = document.createElement("strong")
+        partTitle.textContent = part.textContent
+        h3.appendChild(partTitle)
+        cellAssignment.appendChild(h3)
 
 
+
+        const assignedButton1 = document.createElement("button")
+        const assignedText1 = document.createElement("strong")
+
+        assignedButton1.textContent = "✎"
+        assignedButton1.type = "button"
+        assignedButton1.classList.add("select-button")
+
+        assignedText1.textContent = "ASIGNAR"
+        assignedText1.classList.add("strong-asignado")
 
         if (part.textContent.includes("Estudio bíblico")) {
-          const selector2 = document.createElement("select")
 
-          selector1.id = "vidaSelectorEstudio";
-          selector1.required = 'required'
-          selector2.id = "vidaSelectorEstudioLectura";
-          selector2.required = 'required'
+          assignedText1.classList.add("estudio-text")
+          assignedButton1.classList.add("estudio-button")
+          assignedButton1.id = "vidaSelectorEstudio";
+          assignedText1.id = "vidaSelectorEstudio";
 
-          h3.append(selector1)
-          h3.append(selector2)
+
+          const assignedButton2 = document.createElement("button")
+          const assignedText2 = document.createElement("strong")
+
+
+
+          assignedText2.id = "vidaSelectorEstudioLectura";
+          assignedText2.classList.add("estudio-lectura-text")
+          assignedText2.textContent = "ASIGNAR"
+          assignedText2.classList.add("strong-asignado")
+
+          assignedButton2.id = "vidaSelectorEstudioLectura";
+          assignedButton2.textContent = "✎"
+          assignedButton2.type = "button"
+          assignedButton2.classList.add("select-button")
+          assignedButton2.classList.add("estudio-lectura-button")
+
+
+
+
+          cellAssigned1.append(assignedText1)
+          cellAssigned1.append(assignedButton1)
+          cellAssigned2.append(assignedText2)
+          cellAssigned2.append(assignedButton2)
+
         } else {
-          selector1.id = "vidaSelector" + maestrosCount + "_0"
-          selector1.required = 'required'
-          selector1.classList.add("vidaSelector")
-          h3.append(selector1)
+
+          assignedButton1.id = "vidaSelector" + maestrosCount + "_0"
+          assignedText1.id = "vidaSelector" + maestrosCount + "_0"
+
+          assignedButton1.classList.add("vida-button")
+          assignedText1.classList.add("vida-text")
+          cellAssigned1.append(assignedText1)
+          cellAssigned1.append(assignedButton1)
+
         }
 
-
-
-
-        li.append(h3)
-        vidaList.append(li)
         maestrosCount++;
       });
 
+
+      //CANCION FINAL
       document.querySelector("#cancionFinal").textContent = weekDoc.querySelector(".du-fontSize--base.du-borderStyle-top--solid.du-borderColor--borderDefault.du-borderWidth--2.du-margin-top--12.du-padding-top--4.du-padding-top-desktopOnly--5").textContent;
 
       loadDB();
@@ -296,195 +337,99 @@ function loadDB() {
 
 
   //Select Selectors
-  const selectPresidente = document.querySelector("#asignadoPresidencia");
-  const selectTesoros = document.querySelector("#asignadoDiscursoTesoros");
-  const selectPerlas = document.querySelector("#asignadoPerlas");
-  const selectLectura = document.querySelector("#asignadoLectura");
+  const textPresidente = document.querySelector("#asignadoPresidencia");
+  const buttonPresidente = document.querySelector("#asignadoPresidenciaButton");
+
+  const buttonTesoros = document.querySelector("#asignadoDiscursoTesorosButton");
+  const textTesoros = document.querySelector("#asignadoDiscursoTesoros");
+
+
+  const buttonPerlas = document.querySelector("#asignadoPerlasButton");
+  const textPerlas = document.querySelector("#asignadoPerlas");
+
+  const buttonLectura = document.querySelector("#asignadoLecturaButton");
+  const textLectura = document.querySelector("#asignadoLectura");
+
+
   const oracionFinal = document.querySelector("#asignadoOracionFinal");
 
 
 
   //Llenar Presidentes
 
-  selectPresidente.innerHTML = "<option>    </option>";
-
-  data.filter(e => e[4] == "3").forEach(e => {
-
-
-    const date = formatDate(e[5])
-
-    const option = document.createElement("option")
-    option.id = e[0]
-    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-    selectPresidente.append(option)
-
-  });
+  buttonPresidente.addEventListener("click", function () { showTable(data, textPresidente, 3) })
 
   //Llenar Discurso Tesoros
 
-  selectTesoros.innerHTML = "<option>    </option>";
-
-  data.filter(e => e[4] == "3" || e[4] == "2").forEach(e => {
-
-
-    const date = formatDate(e[5])
-
-    const option = document.createElement("option")
-    option.id = e[0]
-    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-    selectTesoros.append(option)
-
-  });
+  buttonTesoros.addEventListener("click", function () { showTable(data, textTesoros, 2) })
 
   //Llenar Perlas
 
-  selectPerlas.innerHTML = "<option>    </option>";
-
-  data.filter(e => e[4] == "3" || e[4] == "2").forEach(e => {
-
-
-    const date = formatDate(e[5])
-
-    const option = document.createElement("option")
-    option.id = e[0]
-    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-    selectPerlas.append(option)
-
-  });
+  buttonPerlas.addEventListener("click", function () { showTable(data, textPerlas, 2) })
 
   //Llenar Lectura
 
-  selectLectura.innerHTML = "<option>    </option>";
-
-  data.filter(e => e[3] == "H").forEach(e => {
-
-    const date = formatDate(e[5])
-    const option = document.createElement("option")
-    option.id = e[0]
-    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-    selectLectura.append(option)
-
-  });
+  buttonLectura.addEventListener("click", function () { showTable(data, textLectura, 0, "M") })
 
 
 
   //Llenar Maestros
 
   //Get Selects
-  var maestrosStagingList = document.querySelectorAll("select.staging")
-  var maestrosSpeechList = document.querySelectorAll("select.speech")
+  var maestrosStagingButtonList = document.querySelectorAll(".staging-button")
+  var maestrosStagingTextList = document.querySelectorAll(".staging-text")
+  var maestrosSpeechButtonList = document.querySelectorAll(".speech-button")
+  var maestrosSpeechTextList = document.querySelectorAll(".speech-text")
 
 
-  maestrosSpeechList.forEach(select => {
 
-    select.innerHTML = "<option>    </option>";
-    data.filter(e => e[3] == "H").forEach(e => {
+  for (let index = 0; index < maestrosStagingButtonList.length; index++) {
 
-      const date = formatDate(e[5])
-      const option = document.createElement("option")
-      option.id = e[0]
-      option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-      select.append(option)
+    maestrosStagingButtonList[index].addEventListener("click", function () { showTable(data, maestrosStagingTextList[index], 0) })
 
-    });
+  }
 
-  });
+  for (let index = 0; index < maestrosSpeechButtonList.length; index++) {
 
-  maestrosStagingList.forEach(select => {
+    maestrosSpeechButtonList[index].addEventListener("click", function () { showTable(data, maestrosSpeechTextList[index], 1, "M") })
 
-    select.innerHTML = "<option>    </option>";
-
-    data.filter(e => e[0] != "").forEach(e => {
-
-
-      const option = document.createElement("option")
-
-      const date = formatDate(e[5])
-      const sex = sexIcon(e[3])
-      option.id = e[0]
-      option.textContent = sex + e[1] + " " + e[2] + " (" + date + ")"
-      select.append(option)
-
-    });
-
-  });
-
+  }
 
   //Llenar Vida
 
   //Get Selects
-  const vidaSelectors = document.querySelectorAll("select.vidaSelector")
-  const selectEstudio = document.querySelector("#vidaSelectorEstudio");
-  const selectEstudioLectura = document.querySelector("#vidaSelectorEstudioLectura");
-  const selectOracionFinal = document.querySelector("#asignadoOracionFinal");
+  const vidaButtons = document.querySelectorAll(".vida-button")
+  const vidaTexts = document.querySelectorAll(".vida-text")
+
+  const estudioButton = document.querySelector(".estudio-button");
+  const estudioText = document.querySelector(".estudio-text");
+
+  const estudioLecturaButton = document.querySelector(".estudio-lectura-button");
+  const estudioLecturaText = document.querySelector(".estudio-lectura-text");
+
+  const oracionFinalButton = document.querySelector("#asignadoOracionFinalButton");
+  const oracionFinalText = document.querySelector("#asignadoOracionFinalText");
 
   //Llenar partes de Vida excepto Estudio
-  vidaSelectors.forEach(select => {
-
-    select.innerHTML = "<option>    </option>";
-
-    data.filter(e => Number(e[4]) > 1).forEach(e => {
-
-      const option = document.createElement("option")
-
-      const date = formatDate(e[5])
-      option.id = e[0]
-      option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-      select.append(option)
-
-    });
-
-  });
+  for (let index = 0; index < vidaButtons.length; index++) {
+    vidaButtons[index].addEventListener("click", function () { showTable(data, vidaTexts[index], 2) })
+  }
 
   //Llenar Estudio biblico
 
   //Llenar Conductor
-  selectEstudio.innerHTML = "<option>    </option>";
-  data.filter(e => e[4] == 3).forEach(e => {
-
-
-    const option = document.createElement("option")
-    const date = formatDate(e[5])
-    option.id = e[0]
-    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-    selectEstudio.append(option)
-
-  });
+  estudioButton.addEventListener("click", function () { showTable(data, estudioText, 3) })
 
   //Llenar Lector
-  selectEstudioLectura.innerHTML = "<option>    </option>";
-  data.filter(e => e[4] > 1).forEach(e => {
-
-
-    const option = document.createElement("option")
-    const date = formatDate(e[5])
-    option.id = e[0]
-    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-    selectEstudioLectura.append(option)
-
-  });
+  estudioLecturaButton.addEventListener("click", function () { showTable(data, estudioLecturaText, 2) })
 
 
   //Llenar Oracion Final
 
-  selectOracionFinal.innerHTML = "<option>    </option>";
-  data.filter(e => e[4] != "0" && e[3] == "H").forEach(e => {
+  oracionFinalButton.addEventListener("click", function () { showTable(data, oracionFinalText, 1, "M") })
 
-
-    const option = document.createElement("option")
-    const date = formatDate(e[5])
-    option.id = e[0]
-    option.textContent = "⠀⠀" + e[1] + " " + e[2] + " (" + date + ")"
-    selectOracionFinal.append(option)
-
-  });
-
-
-  highlightDuplicated();
 
 }
-
-
 
 //Return Ico matching gender
 function sexIcon(sex) {
@@ -513,7 +458,7 @@ function sort(csvArray, ascending = true) {
   const idxToSort = 5;
 
   //iterate over the whole table except row [0] as this is the headers
-  const sortedRows = csvArray.slice(1, csvArray.length).sort(function(a, b) {
+  const sortedRows = csvArray.slice(1, csvArray.length).sort(function (a, b) {
     if (ascending) return a[idxToSort] > b[idxToSort] ? 1 : -1
     return a[idxToSort] < b[idxToSort] ? 1 : -1
   })
@@ -534,7 +479,7 @@ function parseToArray(csvString) {
 function weekInputHandler() {
 
   const selector = document.querySelector("#weekSelector")
-  selector.addEventListener("change", function() { changeWeek() })
+  selector.addEventListener("change", function () { changeWeek() })
 
   const submit = document.querySelector("#mainForm")
 
@@ -548,6 +493,118 @@ function weekInputHandler() {
 }
 
 
+//Muestra la tabla y la llena con los hermanos disponibles para la asignacion
+function showTable(data, textAsignacion, nombr, sex) {
+
+  showHideSelector();
+
+  const table = document.querySelector("#dataTable")
+  table.innerHTML = ""
+
+  data.filter(e => Number(e[4]) >= nombr && e[3] != sex).forEach(row => {
+
+    const newRow = table.insertRow();
+    newRow.id = row[0]
+    newRow.style.cursor = "pointer"
+    newRow.addEventListener("click", function () { selectRow(newRow) })
+
+    
+
+    //Llenar tabla con los asignados posibles
+    for (i = 1; i < row.length; i++) {
+
+
+      switch (i) {
+
+        case 4:
+          continue;
+          break;
+        //Caso Columna sexo (3)
+        case 3: {
+
+          const newCell = newRow.insertCell();
+          newCell.textContent = sexIcon(row[i])
+
+          break;
+        }
+
+        //Caso default
+        default: {
+          const newCell = newRow.insertCell();
+          newCell.textContent = row[i];
+
+          break;
+        }
+
+      }
+    }
+
+  })
+
+  //Click Listener y funcion para elegir  
+
+  //Remplazar boton por el mismo, lo que quita los listeners
+  const assignButton = document.querySelector("#assignButton");
+  assignButton.replaceWith(assignButton.cloneNode(true));
+
+  //Agregar lsitener al boton
+  document.querySelector("#assignButton").addEventListener("click", function () {
+
+    const selectedRow = document.querySelector(".row-selected")
+    const selectedRowCells = selectedRow.children
+
+    textAsignacion.textContent = selectedRowCells[0].textContent + ' ' + selectedRowCells[1].textContent     
+    textAsignacion.id = selectedRow.id;
+
+    showHideSelector();
+    highlightDuplicated(textAsignacion);
+  })
+
+}
+
+function sortTable(column, th, data) {
+
+  const csv = sessionStorage.getItem("db")
+
+  const actual = parseToArray(csv)
+
+
+
+  //Ordenar segun columna
+  var sortedData = actual.sort(function (a, b) {
+
+
+    if (a[column] < b[column]) {
+      return -1;
+    }
+    if (a[column] < b[column]) {
+      return 1;
+    }
+    return 0;
+  });
+
+  //Reiniciar Headers
+
+  const headers = document.querySelectorAll("th")
+
+  headers.forEach(header => {
+    header.innerText = header.dataset.ot;
+  });
+
+  //Chequear si ya estaba ordenado asi e invertir el orden si es asi 
+  //Agregar flechita que indica direccion
+  if (sortedData.toString() === data.toString()) {
+    sortedData.reverse()
+    th.innerText = th.dataset.ot.slice(0, -1) + "▾"
+  } else {
+    th.innerText = th.dataset.ot.slice(0, -1) + "▴"
+  }
+
+
+
+  createAndSaveCSV(sortedData);
+}
+
 //Cargar a la semana Seleccionada
 function changeWeek() {
   const selector = document.querySelector("#weekSelector")
@@ -555,4 +612,25 @@ function changeWeek() {
   loadWeek(selection);
 }
 
-window.addEventListener("load", function() { weekInputHandler(); }, false);
+function showHideSelector() {
+  const div = document.querySelector("#selectFormDiv")
+
+  if (div.style.display == "flex") {
+    div.style.display = "none"
+  } else {
+    div.style.display = "flex"
+  }
+
+}
+
+//Funcion para resaltar Fila en una tabla
+function selectRow(clickedRow) {
+
+  document.querySelectorAll("tr").forEach(tr => {
+    tr.classList.remove("row-selected")
+  })
+
+  clickedRow.classList.add("row-selected");
+}
+
+window.addEventListener("load", function () { weekInputHandler(); }, false);
