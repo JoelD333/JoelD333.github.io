@@ -116,7 +116,7 @@ function savePDF() {
 
      hiddenElement.href = img.src;
      hiddenElement.target = '_blank';
-     hiddenElement.download = 'myFile.jpeg';
+     hiddenElement.download = (week + '.jpeg');
      hiddenElement.click();
   })
 
@@ -125,12 +125,13 @@ function savePDF() {
 
 //Cargar datos de la semana
 function loadWeek(week) {
-
+  //Reiniciar Botones de Asignar
   document.querySelectorAll(".select-button").forEach(e => {
     e.style.display = "inline-block"
   });
 
 
+  //Buscar HTML con los datos de la semana seleccionada
   const url = "./Files/Weeks/" + week + ".html"
   fetch(url)
     .then((response) => {
@@ -518,10 +519,9 @@ function weekInputHandler() {
   const selector = document.querySelector("#weekSelector")
   selector.addEventListener("change", function () { changeWeek() })
 
-  const submit = document.querySelector("#mainForm")
+  const saveButton = document.querySelector("#saveButton")
 
-  submit.addEventListener("submit", (e) => {
-    e.preventDefault();
+  saveButton.addEventListener("click", function() {   
     saveDates();
     savePDF();
   })
