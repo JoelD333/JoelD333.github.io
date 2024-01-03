@@ -1,17 +1,12 @@
-// URL de la API de Google Sheets
-
-var hoja1Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=284054636&single=true&widget=false&headers=false&chrome=false";
-var hoja2Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=2036176846&single=true&widget=false&headers=false&chrome=false";
-var hoja3Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=321154631&single=true&widget=false&headers=false&chrome=false";
-var hoja4Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=0&single=true&widget=false&headers=false&chrome=false";
-var hoja5Url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pubhtml?gid=1184309177&single=true&widget=false&headers=false&chrome=false";
-
 var dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
 
-const hojas = [hoja1Url, hoja2Url, hoja3Url, hoja4Url, hoja5Url]
+const gids = ["284054636", "2036176846", "321154631", "0", "1184309177"]
 const fechas = [];
 
-var hojaActual = 0;
+var gidActual = 0;
+
+var loader;
+var table;
 
 //Número más cercano, retorna índice del array
 const closestIndex = (num, arr) => {
@@ -30,6 +25,11 @@ const closestIndex = (num, arr) => {
 };
 
 function dateManager() {
+  //Cargar loader y tabla en variable
+  loader = document.querySelector("#loader");
+  table = document.querySelector("#table");
+
+  //Cargar las fechas desde el documento
   fetch(dataUrl)
     .then(response => response.text())
     .then(data => {
@@ -43,57 +43,129 @@ function dateManager() {
       }
 
       console.log(fechas);
-      
+
       //Buscar la fecha mas cercana a la actual
       var date = new Date().getDate();
       ci = closestIndex(date, fechas);
 
       if (date < fechas[ci] && ci != 0) {
-        hojaActual = ci - 1;
+        gidActual = ci - 1;
       } else {
-        hojaActual = ci;
+        gidActual = ci;
       };
-      
-     
 
-      iframeManager();
+
+
+      loadWeek();
     }).catch(error => {
       console.error("Error al cargar el archivo CSV:", error);
     });
 
 }
 
-function iframeManager() {
-  
-  var loader = document.getElementById("loader");
-  loader.style.display = 'initial';
-  
-   iframe = document.getElementById("iframe");
-   iframe.src = hojas[0];
-   iframe.scrolling = 'no';
- 
- loader.style.display = 'none';
- 
- };
-
 // Carga los datos al cargar la página
 window.addEventListener("load", dateManager);
 
 
 function hojaPlus() {
-  if (hojaActual >= 4) {
-    hojaActual = 0;
+  loader.style.display = 'initial';
+
+  if (gidActual >= 4) {
+    gidActual = 0;
   } else {
-    hojaActual++;
+    gidActual++;
   }
-  iframeManager();
+  loadWeek();
 };
 
 function hojaMinus() {
-  if (hojaActual <= 0) {
-    hojaActual = 4;
+  loader.style.display = 'initial';
+
+  if (gidActual <= 0) {
+    gidActual = 4;
   } else {
-    hojaActual--;
+    gidActual--;
   }
-  iframeManager();
+  loadWeek();
 };
+
+
+function loadWeek() {
+
+
+  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReGtBiAnM7etSVDdFHJ8kOxK27jQHFXTJnqLZm-tdVvl2Hii2fvdEtjdz2JKdYccE00sf2jz84VZO9/pub?gid=" + gids[gidActual] + "&single=true&output=csv"
+
+  fetch(csvUrl).then(response => response.text())
+    .then(data => {
+
+      table.innerHTML = "";
+
+      var dataRows = data.split('\n');
+
+
+      // Add Header
+
+      const thead = document.createElement("thead");
+      const th = document.createElement("th")
+      const cellText = document.createTextNode(dataRows[0].split(',')[0])
+      th.appendChild(cellText);
+      th.colSpan = 6;
+      thead.appendChild(th);
+      table.appendChild(thead);
+
+
+      [...dataRows].slice(2).forEach(dataRow => {
+
+        const dataCells = dataRow.split(',');
+        const tbody = document.createElement("tbody");
+
+
+
+        for (let index = 0; index < dataCells.length; index++) {
+          const dataCell = dataCells[index]
+
+          let tableRow = document.createElement("tr");
+          
+          let rowCell2 = document.createElement("td");
+          const rowCell1 = document.createElement("td");
+          switch (index) {
+            
+            case 0: {              
+              rowCell1.innerHTML = "Fecha"        
+              break;      
+            }
+            case 1: {              
+              rowCell1.innerHTML = "Hora"
+              break;
+            }
+            case 2: {              
+              rowCell1.innerHTML = "Lugar"
+              break;
+            }
+            case 3: {              
+              rowCell1.innerHTML = "Actividad"
+              break;
+            }
+            case 4: {              
+              rowCell1.innerHTML = "Conductores"
+              break;
+            }
+          }
+
+          rowCell2.textContent = dataCell
+
+          tableRow.appendChild(rowCell1);
+          tableRow.appendChild(rowCell2);
+          tbody.appendChild(tableRow);
+
+        }
+
+        table.appendChild(tbody);
+
+      });
+    })
+
+
+  table.style.display = 'table';
+  loader.style.display = 'none';
+}

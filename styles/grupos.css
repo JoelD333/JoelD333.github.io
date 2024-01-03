@@ -1,3 +1,18 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 100svw;
+  height: 100svh;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #424343;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(0, 0, 0);
+  justify-content: center;
+}
+
 .container {
   align-items: center;
   display: flex;
@@ -10,13 +25,12 @@
 }
 
 .mainContainer {
-
   text-align: center;
   display: flex;
   align-items: center;
   margin: 0 auto;
-  width: 100%;
-  height: 90%;
+  width: 90%;
+  height: 90dvh;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -24,14 +38,16 @@
   flex-direction: column;
 }
 
-iframe {
-  width: 99%;
-  height: 95%;
-  overflow: hidden;
-  
-  }
-button {
+table {
+  color: black;
+  border-collapse: collapse;
+  white-space: nowrap;
+  text-align: center;
+ 
+}
 
+
+button {
   background-color: #52B8D1;
   border: none;
   font-size: 16px;
@@ -51,6 +67,7 @@ button:hover {
   background-color: #afafaf;
 }
 
+/* Texto de los botones */
 a {
   color: white;
   text-decoration: none;
@@ -59,69 +76,38 @@ a {
   line-height: 2pc;
 }
 
-
-
-td {
-  width: 136px;
+tr{
+height: 3.5svh;
 }
 
 td:first-child {
-  width: 100px;
-}
-
-td:nth-child(2) {
-  width: 10px;
-}
-
-tr {
-  height: 45px;
+  width: 30%;
 }
 
 th {
-  width: min-content;
+  height: 45px;
   text-align: center;
   background-color: #5ACCB7;
-}
-
-th:first-child {
   border-top-left-radius: 10px;
-}
-
-th:last-child {
   border-top-right-radius: 10px;
 }
 
-
-table tr:nth-child(even) {
-  background-color: #e6e6e6;
+tbody:nth-child(even) {
+  background-color: #bac4c9;
 
 }
 
-table tr:nth-child(odd) {
-  background-color: #ffffff;
+tbody:nth-child(odd) {
+  background-color: #dce2e2;
 }
 
 
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  align-content: center;
-  width: 100%;
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  background-color: #424343;
-  position: absolute;
-  font-family: Arial, Helvetica, sans-serif;
-  color: rgb(0, 0, 0);
-  align-self: flex-start;
-  vertical-align: middle;
-}
 
 .loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #5ACCB7; /* Blue */
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #5ACCB7;
+  /* Blue */
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -135,6 +121,11 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
