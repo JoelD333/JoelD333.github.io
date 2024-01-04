@@ -11,23 +11,27 @@
 </head>
 
 <body>
-  
-    <div id="loader" class="loader"></div>
-   
-    <div class="mainContainer">
-       
-        <table id="table" style="display: none;">                      
-         </table>
 
+    <div id="loader" class="loader"></div>
+
+    <div class="mainContainer" id="mainDiv">
+
+      
+            <table id="table" style="display: none;">
+            </table>
+    
+
+
+       
     </div>
 
-    <div class="buttonContainer" >
-                <button onclick="history.back()">◀</button>
+    <div class="buttonContainer" id="second">
+        <button onclick="history.back()">◀</button>
         <div style="display: flex; align-self: center; margin-right: 15px;">
             <button onclick="hojaMinus()">-</button>
-              
+
             <button onclick="hojaPlus()">+</button>
-        </div>             
+        </div>
     </div>
 
 </body>

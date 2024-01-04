@@ -2,7 +2,6 @@ body {
   display: flex;
   flex-direction: column;
   width: 100dvw;
-  height: 95dvh;  
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #424343;
@@ -16,32 +15,34 @@ body {
   background: #5accb794;
   display: flex;
   flex-direction: row;
-  justify-content: space-between; 
+  justify-content: space-between;
+
 }
 
 .mainContainer {
   text-align: center;
   display: flex;
-  align-items: center;  
+  align-items: center;
   height: 90%;
   font-size: 15px;
   font-weight: bold;
   color: white;
   align-self: center;
-  flex-direction: column;  
+  flex-direction: column;
+  padding-bottom: 75px;
 }
 
 table {
   color: black;
   border-collapse: collapse;
   text-align: center;
-  table-layout:fixed;
+  table-layout: fixed;
   margin: 10px;
 }
 
-td { 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
   word-wrap: break-word;
 }
 
@@ -81,7 +82,7 @@ th {
 }
 
 tbody:nth-child(even) {
-  background-color: #bac4c9;
+  background-color: #f2f5f7;
 
 }
 
@@ -89,13 +90,17 @@ tbody:nth-child(odd) {
   background-color: #dce2e2;
 }
 
-
 .buttonContainer {
+  bottom: 0;
+  /* you can delete these two lines if you want the position as it is */
+  position: fixed;
   width: 100%;
 }
 
-@media screen and (min-width:500px){
-  .container { bottom: 0px; }
+@media screen and (min-width:500px) {
+  .container {
+    bottom: 0px;
+  }
 }
 
 .loader {
