@@ -1,51 +1,52 @@
 body {
   display: flex;
   flex-direction: column;
-  align-content: center;
-  width: 100svw;
-  height: 100svh;
-  margin: 0;
+  width: 100dvw;
+  height: 95dvh;  
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #424343;
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(0, 0, 0);
   justify-content: center;
+  margin: 0px;
 }
 
 .container {
-  align-items: center;
   display: flex;
-  font-size: 18px;
+  flex-direction: row;
   font-weight: bold;
   color: white;
-  width: 100%;
-  justify-content: space-between;
-  align-self: center;
+  justify-content: space-between;  
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .mainContainer {
   text-align: center;
   display: flex;
-  align-items: center;
-  margin: 0 auto;
-  width: 90%;
-  height: 90dvh;
-  font-size: 20px;
+  align-items: center;  
+  height: 90%;
+  font-size: 15px;
   font-weight: bold;
   color: white;
   align-self: center;
-  flex-direction: column;
+  flex-direction: column;  
 }
 
 table {
   color: black;
   border-collapse: collapse;
-  white-space: nowrap;
   text-align: center;
- 
+  table-layout:fixed;
+  margin: 10px;
 }
 
+td { 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  word-wrap: break-word;
+}
 
 button {
   background-color: #52B8D1;
@@ -76,14 +77,6 @@ a {
   line-height: 2pc;
 }
 
-tr{
-height: 3.5svh;
-}
-
-td:first-child {
-  width: 30%;
-}
-
 th {
   height: 45px;
   text-align: center;
@@ -100,6 +93,9 @@ tbody:nth-child(even) {
 tbody:nth-child(odd) {
   background-color: #dce2e2;
 }
+
+
+
 
 
 
