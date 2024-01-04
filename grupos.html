@@ -15,19 +15,20 @@
     <div id="loader" class="loader"></div>
    
     <div class="mainContainer">
-        <button style="margin: 0;"><a href="index.html"> ◀ </a></button>
+       
         <table id="table" style="display: none;">                      
          </table>
 
     </div>
 
-    <div class="container">
-                <button onclick="hojaMinus()">◀</button>
+    <div class="buttonContainer" >
+                <button onclick="history.back()">◀</button>
+        <div style="display: flex; align-self: center; margin-right: 15px;">
+            <button onclick="hojaMinus()">-</button>
               
-                <button onclick="hojaPlus()">▶</button>
+            <button onclick="hojaPlus()">+</button>
+        </div>             
     </div>
 
 </body>
-
-
 </html>
