@@ -11,14 +11,6 @@ body {
   margin: 0px;
 }
 
-.buttonContainer {
-  background: #5accb794;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-}
-
 .mainContainer {
   text-align: center;
   display: flex;
@@ -91,11 +83,17 @@ tbody:nth-child(odd) {
 }
 
 .buttonContainer {
+  background: #5accb794;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   bottom: 0;
   /* you can delete these two lines if you want the position as it is */
   position: fixed;
   width: 100%;
 }
+
+
 
 @media screen and (min-width:500px) {
   .container {

@@ -202,9 +202,8 @@ function loadWeek(week) {
 
 function loadData(week) {
 
-  console.log(week)
   const index = fechas.findIndex(e => e == week)
-  console.log(index);
+
   if (index >= 0){
 
     fetch(hojas[index]).then(response => response.text()).then(data => {
@@ -215,8 +214,7 @@ function loadData(week) {
       for (let index = 0; index < strongs.length; index++) {
         
         strongs[index].textContent = rows[index+1]; 
-        console.log(strongs[index])
-        console.log(rows[index+1])
+        
       }
       loader.style.display = 'none';
     })
@@ -224,15 +222,12 @@ function loadData(week) {
   }else{
     alert("Semana sin Datos")
   }
-
-
-  
 }
 
 
 
 function loadDates() {
-  console.log("a");
+ 
   fetch(dataUrl).then(response => response.text()).then(data => {
     const rows = data.split("\r\n")
 

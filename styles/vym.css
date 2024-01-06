@@ -9,7 +9,7 @@ html {
 
 body {
   position: relative;
-  margin-left: 10%;
+  margin-left: 1%;
   background-color: #f3f1ee;
   width: 100vw;  
   font-family: arial, sans-serif;
@@ -248,9 +248,7 @@ select {
 }
 
 .assignments-table td:nth-child(1) {
-  width: 55vh;
-
-
+  width: 35vh;
 }
 
 .assignments-table td:nth-child(2) {
@@ -335,4 +333,22 @@ button {
   position: fixed;
   justify-content: center;
   display: grid;
+}
+
+.buttonContainer {
+  background: #5accb794;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  bottom: 0;
+  /* you can delete these two lines if you want the position as it is */
+  position: fixed;
+  width: 100%;
+  left: 0;
+  height: 70px;
+}
+@media screen and (min-width:500px) {
+  .container {
+    bottom: 0px;
+  }
 }
