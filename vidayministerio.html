@@ -11,17 +11,151 @@
 </head>
 
 <body>
-  <div id="loader" class="loader"></div>
+    <div id="loaderDiv" class="loader-div">
+        <div id="loader" class="loader"></div>
+    </div>
+
+
     <div class="mainContainer">
-        <button><a href="index.html"> ◀ </a></button>
-        <iframe id="iframe"></iframe>
+        <form id="mainForm">
+            <div id="mainDiv" class="main-div">
+
+
+                <!-- Inicio de Formulario-->
+
+                <h1 id="semana"> SEMANA</h1>
+                <h2 id="lecturaSemana" class="lecturaSemana"> LECTURA</h2>
+                <hr>
+
+
+                <!-- TABLA -->
+                <table class="assignments-table">
+                    <!-- PRESIDENTE -->
+                    <tr>
+                        <td>
+                            <h3>
+                                <strong id="presidencia">Canción y oración | Palabras de introducción (1 min.) </strong>
+
+                            </h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <Strong id="asignadoPresidencia" class="strong-asignado">ASIGNAR</Strong>
+
+                        </td>
+                    </tr>
+
+
+
+                    <!-- TESOROS DE LA BIBLIA -->
+                    <tr>
+                        <td>
+                            <h2 class="tesoros">
+                                <img src="./files/icons/Treasures.png"
+                                    style="object-fit: scale-down; width: 35px; margin-right: 10px;">
+                                <strong>TESOROS DE LA BIBLIA </strong>
+                            </h2>
+                        </td>
+                    </tr>
+
+                    <td>
+                        <h3 class="tesoros">
+                            <strong id="discursoTesoros"> 1. DISCURSO </strong>
+
+                        </h3>
+                    </td>
+                    <tr>
+                        <td>
+                            <strong id="asignadoDiscursoTesoros" class="strong-asignado">ASIGNAR</strong>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <h3 class="tesoros">
+                                <strong> 2. Busquemos perlas escondidas </strong>
+
+                            </h3>
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong id="asignadoPerlas" class="strong-asignado">ASIGNAR</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3 class="tesoros">
+                                <strong> 3. Lectura de la Biblia </strong>
+                            </h3>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong id="asignadoLectura" class="strong-asignado">ASIGNAR</strong>
+                        </td>
+                    </tr>
+
+
+
+                </table>
+
+
+                <!-- SEAMOS MEJORES MAESTROS -->
+                <h2 class="maestros"><img src="./files/icons/Masters.png"
+                        style="object-fit: scale-down; width: 35px; margin-right: 10px;">
+                    <strong>SEAMOS MEJORES MAESTROS</strong>
+                </h2>
+                <hr>
+                <table id="maestrosTable" class="assignments-table">
+
+                </table>
+
+                <!-- NUESTRA VIDA CRISTIANA -->
+
+                <h2 class="vida"><img src="./files/Icons/Living.png"
+                        style="object-fit: scale-down; width: 35px; margin-right: 10px;">
+                    <strong>NUESTRA VIDA CRISTIANA</strong>
+                </h2>
+                <hr>
+                <h3><strong id=cancionMedio> Cancion </strong></h3>
+
+                <table id="vidaTable" class="assignments-table">
+
+                </table>
+
+                <table class="assignments-table">
+                    <tr>
+                        <td>
+                            <h3>
+                                <strong id="cancionFinal">Palabras de conclusión (3 mins.) | Canción 67 y oración
+                                </strong>
+                            </h3>
+                        </td>                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <Strong id="asignadoOracionFinalText" class="strong-asignado">ASIGNAR</Strong>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+
+        </form>
+
 
     </div>
 
     <div class="buttonContainer">
-    <button onclick="hojaMinus()">◀</button>
-   
-    <button onclick="hojaPlus()">▶</button>
+        <input id="weekInput" type="week" style="color: black;" min="2024-W01" max="2025-W01">
     </div>
 
 
