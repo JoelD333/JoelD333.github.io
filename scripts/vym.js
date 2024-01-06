@@ -234,8 +234,14 @@ function loadDates() {
     rows.forEach(element => {
       fechas.push(element)
     });
+
+
+
     loadWeek(weekInput.value);
   })
+
+
+
 
 }
 
@@ -257,10 +263,16 @@ window.addEventListener("load", function () {
     (24 * 60 * 60 * 1000));
 
 
+   
   let weekNumber = Math.ceil(days / 7);
 
+  //Si ya paso el Miercoles, pasar a la siguiente semana
+  if(currentDate.getDay() > 3){
+    weekNumber++;
+  }
   //Add zero if one digit
   weekNumber = ("0" + weekNumber).slice(-2);
+
 
   let week = "2024-W" + weekNumber
 
