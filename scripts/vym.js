@@ -1,14 +1,8 @@
-var dataUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=664760905&single=true&output=csv";
 
-var hoja1 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=1368245959&single=true&output=csv";
-var hoja2 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=1961860971&single=true&output=csv";
-var hoja3 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=1458096871&single=true&output=csv";
-var hoja4 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=497589365&single=true&output=csv";
-
+var hojaDatos = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkf5Mm5Lvr4LGWiaej9RAD7J1Jt1jfYz8XG1zLnIeFSsB04VZ0UxSGRfYONf57SpP6vt2GlKuRMiAY/pub?gid=1368245959&single=true&output=csv"
+var datos = [];
 
 var loader;
-
-const hojas = [hoja1, hoja2, hoja3, hoja4];
 const fechas = [];
 var semanaActual = 0;
 
@@ -195,32 +189,40 @@ function loadWeek(week) {
       //CANCION FINAL
       document.querySelector("#cancionFinal").textContent = weekDoc.querySelector(".du-fontSize--base.du-borderStyle-top--solid.du-borderColor--borderDefault.du-borderWidth--2.du-margin-top--12.du-padding-top--4.du-padding-top-desktopOnly--5").textContent;
 
+      loadData(week);
     });
 
-  loadData(week);
+
 }
 
 function loadData(week) {
 
-  const index = fechas.findIndex(e => e == week)
+  const dateIndex = fechas.findIndex(e => e == week)
 
-  if (index >= 0){
-
-    fetch(hojas[index]).then(response => response.text()).then(data => {
-      const rows = data.split("\r\n")
-  
+  if (dateIndex >= 0){
+ 
       const strongs = document.querySelectorAll(".strong-asignado")
+      const cells = datos[dateIndex].split(",");
 
-      for (let index = 0; index < strongs.length; index++) {
+      console.log(cells);
+
+      strongs.forEach(strong => {
+        console.log("aa");
+      });
+
+
+      for (let idx = 0; idx < strongs.length; idx++) {
         
-        strongs[index].textContent = rows[index+1]; 
-        
+        console.log(idx)
+        strongs[idx].textContent = cells[idx+1]; 
+        console.log("Late" + idx)
       }
       loader.style.display = 'none';
-    })
+    
    
   }else{
-    alert("Semana sin Datos")
+    alert("Error al cargar Semana")
+    loader.style.display = 'none';
   }
 }
 
@@ -228,19 +230,16 @@ function loadData(week) {
 
 function loadDates() {
  
-  fetch(dataUrl).then(response => response.text()).then(data => {
-    const rows = data.split("\r\n")
+  fetch(hojaDatos).then(response => response.text()).then(data => {
+    datos = data.split("\r\n")
 
-    rows.forEach(element => {
-      fechas.push(element)
-    });
-
-
+  
+    datos.forEach(row => {
+       fechas.push(row.split(",")[0])
+     });
 
     loadWeek(weekInput.value);
   })
-
-
 
 
 }
