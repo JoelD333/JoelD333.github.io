@@ -211,22 +211,16 @@ function loadData(week) {
       });
 
 
-      for (let idx = 0; idx < strongs.length; idx++) {
-        
-        console.log(idx)
+      for (let idx = 0; idx < strongs.length; idx++) {          
         strongs[idx].textContent = cells[idx+1]; 
-        console.log("Late" + idx)
       }
       loader.style.display = 'none';
-    
-   
+       
   }else{
     alert("Error al cargar Semana")
     loader.style.display = 'none';
   }
 }
-
-
 
 function loadDates() {
  
@@ -243,8 +237,6 @@ function loadDates() {
 
 
 }
-
-
 
 //Load Event
 window.addEventListener("load", function () {
@@ -271,11 +263,14 @@ window.addEventListener("load", function () {
   }
   //Add zero if one digit
   weekNumber = ("0" + weekNumber).slice(-2);
-
-
+  
   let week = "2024-W" + weekNumber
 
   weekInput.value = week;
 
   loadDates();
 });
+
+function cheeckDayofWeek(){
+
+}
