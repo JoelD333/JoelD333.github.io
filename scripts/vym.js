@@ -73,12 +73,14 @@ function loadWeek(week) {
         const cellAssigned2 = partRow2.insertCell();
 
 
+       
         const h3 = document.createElement("h3")
         h3.classList.add("maestros")
         const partTitle = document.createElement("strong")
         partTitle.textContent = part.textContent
         h3.appendChild(partTitle)
         cellAssignment.appendChild(h3)
+        cellAssignment.colSpan = 2;
 
         const assignedText1 = document.createElement("strong")
         const assignedText2 = document.createElement("strong")
@@ -120,6 +122,10 @@ function loadWeek(week) {
         maestrosCount++;
       });
 
+
+
+
+
       //Nuestra Vida Cristiana
 
       document.querySelector("#cancionMedio").textContent = weekDoc.querySelectorAll(".du-fontSize--base.dc-icon--music.dc-icon-size--basePlus1.dc-icon-margin-horizontal--8")[1].textContent;
@@ -147,6 +153,7 @@ function loadWeek(week) {
         const partTitle = document.createElement("strong");
         partTitle.textContent = part.textContent;
         h3.appendChild(partTitle);
+        cellAssignment.colSpan = 2;
         cellAssignment.appendChild(h3);
 
         const assignedText1 = document.createElement("strong");
@@ -199,38 +206,38 @@ function loadData(week) {
 
   const dateIndex = fechas.findIndex(e => e == week)
 
-  if (dateIndex >= 0){
- 
-      const strongs = document.querySelectorAll(".strong-asignado")
-      const cells = datos[dateIndex].split(",");
+  if (dateIndex >= 0) {
 
-      console.log(cells);
+    const strongs = document.querySelectorAll(".strong-asignado")
+    const cells = datos[dateIndex].split(",");
 
-      strongs.forEach(strong => {
-        console.log("aa");
-      });
+    console.log(cells);
+
+    strongs.forEach(strong => {
+      console.log("aa");
+    });
 
 
-      for (let idx = 0; idx < strongs.length; idx++) {          
-        strongs[idx].textContent = cells[idx+1]; 
-      }
-      loader.style.display = 'none';
-       
-  }else{
+    for (let idx = 0; idx < strongs.length; idx++) {
+      strongs[idx].textContent = cells[idx + 1];
+    }
+    loader.style.display = 'none';
+
+  } else {
     alert("Error al cargar Semana")
     loader.style.display = 'none';
   }
 }
 
 function loadDates() {
- 
+
   fetch(hojaDatos).then(response => response.text()).then(data => {
     datos = data.split("\r\n")
 
-  
+
     datos.forEach(row => {
-       fechas.push(row.split(",")[0])
-     });
+      fechas.push(row.split(",")[0])
+    });
 
     loadWeek(weekInput.value);
   })
@@ -254,16 +261,16 @@ window.addEventListener("load", function () {
     (24 * 60 * 60 * 1000));
 
 
-   
+
   let weekNumber = Math.ceil(days / 7);
 
   //Si ya paso el Miercoles, pasar a la siguiente semana
-  if(currentDate.getDay() > 3){
+  if (currentDate.getDay() > 3) {
     weekNumber++;
   }
   //Add zero if one digit
   weekNumber = ("0" + weekNumber).slice(-2);
-  
+
   let week = "2024-W" + weekNumber
 
   weekInput.value = week;
@@ -271,6 +278,6 @@ window.addEventListener("load", function () {
   loadDates();
 });
 
-function cheeckDayofWeek(){
+function cheeckDayofWeek() {
 
 }
