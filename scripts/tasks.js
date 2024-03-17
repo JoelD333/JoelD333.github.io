@@ -58,22 +58,22 @@ function loadDates() {
 
 // Función para cargar los datos desde Google Sheets
 function loadCsvData() {
-  
+
   //Buscar tabla y limpiarla
   var table = document.getElementById("csvTable");
   table.innerHTML = "";
 
-//Buscar Loader y Mostrarlo
+  //Buscar Loader y Mostrarlo
   var loader = document.getElementById("loader");
   loader.style.display = 'initial';
 
   fetch(csvUrl)
     .then(response => response.text())
     .then(data => {
-     //Separar CSV
+      //Separar CSV
       var lines = data.split('\n');
 
-//Agregar Headers
+      //Agregar Headers
       var header = table.insertRow();
       var headerCell = document.createElement("TH");
       headerCell.innerHTML = "Tarea";
@@ -92,9 +92,9 @@ function loadCsvData() {
       var fecha = document.getElementById("date");
       fecha.textContent = cells[0];
 
-
-      for (var i = 1; i < lines.length + 1; i++) {
-
+console.log(lines)
+      for (var i = 1; i < cells.length + 1; i++) {
+        console.log("test" + i)
         var row = table.insertRow();
 
         // Agrega columna de encabezado
