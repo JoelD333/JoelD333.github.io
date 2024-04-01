@@ -88,7 +88,7 @@ function loadWeek(week) {
 
 
         // Si la parte es 1era Conversasion, Revisita o Estudio
-        if (partTitle.textContent.includes("Empiece conversaciones") || partTitle.textContent.includes("Haga revisitas") || partTitle.textContent.includes("Haga discípulos")) {
+        if (partTitle.textContent.includes("Empiece conversaciones") || partTitle.textContent.includes("Haga revisitas") || partTitle.textContent.includes("Haga discípulos") || partTitle.textContent.includes("Explique sus creencias")) {
 
 
 
