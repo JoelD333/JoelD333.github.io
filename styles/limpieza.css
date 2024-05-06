@@ -45,45 +45,6 @@ a {
 }
 
 
-table {
-  border-collapse: separate;
-  border-spacing: 0px;
-  text-align: center;
-  font-size: x-large;
-  width: 98%;
-  align-self: center;
-  height: 80%;
-}
-
-td {
-  width: min-content;
-}
-
-
-th{
-  
-    background-color: #5ACCB7;
-}
-
-th:nth-child(odd){
-  border-top-left-radius: 10px;
-}
-th:nth-child(even){
-  border-top-right-radius: 10px;
-}
-
-
-table tbody:nth-child(even) {
-  background-color: #e6e6e6;
-
-}
-
-table tbody:nth-child(odd) {
-  
-  background-color: #ffffff;
-}
-
-
 body {
   display: flex;
   flex-direction: column;

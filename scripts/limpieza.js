@@ -80,49 +80,38 @@ function loadCsvData() {
       row.style.fontWeight = 'bold';
       
       var header1 = document.createElement("TH");
-      header1.colSpan = 2;
+      header1.setAttribute("scope", "col");
+    
       header1.innerHTML = cells[0];
       row.appendChild(header1);
       
       var header2 = document.createElement("TH");
+      header2.setAttribute("scope", "col");
       header2.innerHTML = cells[1];
-      header2.colSpan = 1;
+     
       row.appendChild(header2);
+      var tb =  document.createElement("tbody");
+      tb.classList.add("table-secondary")
 
       for (var i = 1; i < lines.length; i++) {
-        var cells = lines[i].split(',');
-      
-       var tb =  document.createElement("tbody");
-      
+        var cells = lines[i].split(',');                  
       
         var row = tb.insertRow();
 
         var cellFecha = row.insertCell(0);
         cellFecha.textContent = cells[0];
-        cellFecha.rowSpan = 3;
-
+       
         var cellGrupo = row.insertCell();
-        cellGrupo.textContent = cells[1];
-        cellGrupo.rowSpan = 3;
-
-        var cell1 = row.insertCell();
-        cell1.textContent = cells[2];
-
-        var row2 = tb.insertRow();
-        var cell2 = row2.insertCell();
-        cell2.textContent = cells[3];
-
-        var row3 = tb.insertRow();
-        var cell3 = row3.insertCell();
-        cell3.textContent = cells[4];
-
+        cellGrupo.textContent = cells[1];    
+        
         if (i == fila) {
-          tb.style.fontWeight = 'bold';
+          row.style.fontWeight = 'bold';
+          row.classList.add("table-success")
         }
 
-table.appendChild(tb);
+    
       };
-      
+      table.appendChild(tb);
       //Esconder loader
       loader.style.display ='none';
     })
